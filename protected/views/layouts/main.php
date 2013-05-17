@@ -33,8 +33,9 @@
 				array('label'=>'Sobre', 'url'=>array('/site/page', 'view'=>'about')),
 				array('label'=>'Contato', 'url'=>array('/site/contact')),
 				array('label'=>'Login', 'url'=>array('/user/login'), 'visible'=>Yii::app()->user->isGuest),
+				array('label'=>'Perfil', 'url'=>array('/user/profile'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Usuários', 'url'=>array('/user'), 'visible'=>!Yii::app()->user->isGuest),
-				array('label'=>'Rights', 'url'=>array('/rights'), 'visible'=>!Yii::app()->user->isGuest),
+				array('label'=>'Rights', 'url'=>array('/rights'), 'visible'=>Yii::app()->getModule('user')->isAdmin()),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/user/logout'), 'visible'=>!Yii::app()->user->isGuest)
 			),
 		)); ?>
