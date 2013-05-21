@@ -7,7 +7,7 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'INTRANET/SSP',
+	'name'=>'INTRANET - SSP/AM',
 		
 	'sourceLanguage'=>'en_us',
 	'language'=>'pt_br',
@@ -25,18 +25,17 @@ return array(
 		'application.modules.user.components.*',
 		'application.modules.rights.*',
 		'application.modules.rights.components.*',
+		'application.modules.unidade.*',
+		'application.modules.unidade.components.*',
 	),
 
 	'modules'=>array(
-		// uncomment the following to enable the Gii tool
-		/*
 		'gii'=>array(
 			'class'=>'system.gii.GiiModule',
-			'password'=>'Enter Your Password Here',
+			'password'=>'intranet',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
 		),
-		*/
 		'user'=>array(
 			# encrypting method (php hash function)
 			'hash' => 'md5',
@@ -71,6 +70,7 @@ return array(
 		'rights'=>array(
 			//'install'=>true,
 		),
+		'unidade',
 	),
 
 	// application components
