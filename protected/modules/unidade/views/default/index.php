@@ -4,8 +4,10 @@
 $this->breadcrumbs=array(
 	$this->module->id,
 );
-?>
 
-<h2>Tree View</h2>
+$this->menu=array(
+		array('label'=>'Adicionar Unidade', 'url'=>array('create')),
+);
+?>
 
 <?php $this->widget('CTreeView',array('data'=>$data,'animated'=>'fast','collapsed'=>false,'htmlOptions'=>array('class'=>'filetree'))); ?>

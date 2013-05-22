@@ -46,7 +46,7 @@ class Unidade extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'children'=>array(self::HAS_MANY,'unidade','pai'),
-			'has_children'=>array(self::STAT,'unidade','pai'),
+			'pai'=>array(self::HAS_ONE,'unidade','pai'),
 		);
 	}
 
@@ -100,5 +100,10 @@ class Unidade extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+	
+	public function listAll()
+	{
+		return CHtml::listData($this->findAll(array('order'=>'nome')),'id','nome');
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-class SiteController extends Controller
+class SiteController extends RController
 {
 	/**
 	 * Declares class-based actions.
@@ -19,6 +19,16 @@ class SiteController extends Controller
 				'class'=>'CViewAction',
 			),
 		);
+	}
+	
+	public function filters()
+	{
+		return array( 'rights', );
+	}
+	
+	public function allowedActions()
+	{
+		return 'index, page, contact, suggestedTags';
 	}
 
 	/**
