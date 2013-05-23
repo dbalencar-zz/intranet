@@ -1,22 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "unidade".
+ * This is the model class for table "protocolo".
  *
- * The followings are the available columns in table 'unidade':
+ * The followings are the available columns in table 'protocolo':
  * @property string $id
- * @property string $sigla
- * @property string $nome
- * @property integer $pai
+ * @property string $documento
+ * @property string $origem
+ * @property string $datahora
+ * @property string $usuario
+ * @property string $observacao
  */
-class Unidade extends CActiveRecord
-{
+class Protocolo extends CActiveRecord
+{	
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'unidade';
+		return 'protocolo';
 	}
 
 	/**
@@ -27,13 +29,13 @@ class Unidade extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('sigla, nome', 'required'),
-			array('pai', 'numerical', 'integerOnly'=>true),
-			array('sigla', 'length', 'max'=>10),
-			array('nome', 'length', 'max'=>50),
+			array('documento, origem', 'required'),
+			array('documento', 'length', 'max'=>50),
+			array('origem, observacao', 'length', 'max'=>100),
+			array('usuario', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, sigla, nome, pai', 'safe', 'on'=>'search'),
+			array('id, documento, origem, datahora, usuario, observacao', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -45,9 +47,7 @@ class Unidade extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'children'=>array(self::HAS_MANY,'unidade','pai'),
-			'pai'=>array(self::HAS_ONE,'unidade','pai'),
-			'profiles'=>array(self::HAS_MANY, 'Profile', 'unidade_id'),
+			'us'=>array(self::BELONGS_TO,'User','usuario'),
 		);
 	}
 
@@ -57,10 +57,12 @@ class Unidade extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'sigla' => 'Sigla',
-			'nome' => 'Nome',
-			'pai' => 'Pai',
+			'id' => 'Protocolo',
+			'documento' => 'Documento',
+			'origem' => 'Origem',
+			'datahora' => 'Data/Hora',
+			'usuarioText' => 'Usuário',
+			'observacao' => 'Observação',
 		);
 	}
 
@@ -83,9 +85,11 @@ class Unidade extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id,true);
-		$criteria->compare('sigla',$this->sigla,true);
-		$criteria->compare('nome',$this->nome,true);
-		$criteria->compare('pai',$this->pai);
+		$criteria->compare('documento',$this->documento,true);
+		$criteria->compare('origem',$this->origem,true);
+		$criteria->compare('datahora',$this->datahora,true);
+		$criteria->compare('usuario',$this->usuario,true);
+		$criteria->compare('observacao',$this->observacao,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -96,15 +100,27 @@ class Unidade extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Unidade the static model class
+	 * @return Protocolo the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
 	
-	public function listAll()
+	protected function beforeSave()
 	{
-		return CHtml::listData($this->findAll(array('order'=>'nome')),'id','nome');
+		if ($this->isNewRecord)
+		{
+			$this->usuario=Yii::app()->getModule('user')->user()->id;
+			$this->datahora=new CDbExpression('NOW()');
+		}
+		
+		return parent::beforeSave();
+	}
+	
+	public function getUsuarioText()
+	{
+		$profile = $this->us->profile;
+		return $profile->first_name.' '.$profile->last_name.' ('.$profile->unidade->nome.')';
 	}
 }

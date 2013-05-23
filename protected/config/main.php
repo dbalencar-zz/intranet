@@ -23,10 +23,12 @@ return array(
 		'application.components.*',
 		'application.modules.user.models.*',
 		'application.modules.user.components.*',
-		'application.modules.rights.*',
+		'application.modules.rights.models.*',
 		'application.modules.rights.components.*',
-		'application.modules.unidade.*',
+		'application.modules.unidade.models.*',
 		'application.modules.unidade.components.*',
+		'application.modules.protocolo.models.*',
+		'application.modules.protocolo.components.*',
 	),
 
 	'modules'=>array(
@@ -66,11 +68,16 @@ return array(
 			
 			# page after logout
 			'returnLogoutUrl' => array('/user/login'),
+				
+			'profileRelations'=>array(						
+				'unidade'=>array(CActiveRecord::BELONGS_TO, 'Unidade', 'unidade_id'),
+			),	
 		),
 		'rights'=>array(
 			//'install'=>true,
 		),
 		'unidade',
+		'protocolo',
 	),
 
 	// application components
