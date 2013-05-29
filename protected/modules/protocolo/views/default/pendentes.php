@@ -7,7 +7,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Protocolar', 'url'=>array('create')),
+	array('label'=>'Protocolar', 'url'=>array('create'), 'visible'=>Yii::app()->user->checkAccess('Protocolista')),
 	array('label'=>'Pesquisar', 'url'=>array('admin')),
 );
 ?>

@@ -8,8 +8,8 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Protocolar', 'url'=>array('create')),
-	array('label'=>'Tramitar', 'url'=>array('move', 'id'=>$model->id)),
+	array('label'=>'Pesquisar', 'url'=>array('admin')),
+	array('label'=>'Protocolar', 'url'=>array('create'), 'visible'=>Yii::app()->user->checkAccess('Protocolista')),
 );
 ?>
 

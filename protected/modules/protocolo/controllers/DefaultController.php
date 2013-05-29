@@ -23,7 +23,7 @@ class DefaultController extends RController
 	
 	public function allowedActions()
 	{
-		return 'index, pendentes';
+		return 'index, suggestedTags';
 	}
 
 	public function actionPendentes()
@@ -83,6 +83,7 @@ class DefaultController extends RController
 		
 		$criteria=new CDbCriteria();
 		$criteria->compare('protocolo_id',$id);
+		$criteria->order='or_datahora desc';
 		$dataProvider=new CActiveDataProvider('Tramitacao', array('criteria'=>$criteria));
 		
 		$this->render('view',array(
