@@ -29,13 +29,12 @@ class Tramitacao extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('protocolo_id, destino, datahora, usuario, estado', 'required'),
-			array('protocolo_id, destino, usuario', 'numerical', 'integerOnly'=>true),
-			array('estado', 'length', 'max'=>1),
+			array('protocolo_id, destino', 'required'),
+			array('protocolo_id, destino', 'numerical', 'integerOnly'=>true),
 			array('despacho', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, protocolo_id, destino, datahora, usuario, estado, despacho', 'safe', 'on'=>'search'),
+			array('protocolo_id, origem, or_usuario, or_datahora, destino, despacho', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -47,6 +46,10 @@ class Tramitacao extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'pr'=>array(self::BELONGS_TO,'Protocolo','protocolo_id'),
+			'or'=>array(self::BELONGS_TO,'Unidade','origem'),
+			'de'=>array(self::BELONGS_TO,'Unidade','destino'),
+			'us'=>array(self::BELONGS_TO,'User','or_usuario'),
 		);
 	}
 
@@ -59,11 +62,14 @@ class Tramitacao extends CActiveRecord
 			'id' => 'ID',
 			'protocolo_id' => 'Protocolo',
 			'origem' => 'Origem',
+			'or.sigla' => 'Origem',
+			'or_usuario' => 'Usuário',
 			'or_datahora' => 'Data/Hora',
 			'destino' => 'Destino',
+			'de.sigla' => 'Destino',
+			'de_usuario' => 'Usuário',
 			'de_datahora' => 'Data/Hora',
-			'usuario' => 'Usuario',
-			'estado' => 'Estado',
+			'arquivado' => 'Arquivado',
 			'despacho' => 'Despacho',
 		);
 	}
@@ -86,11 +92,11 @@ class Tramitacao extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id,true);
 		$criteria->compare('protocolo_id',$this->protocolo_id,true);
+		$criteria->compare('origem',$this->origem);
+		$criteria->compare('or_usuario',$this->or_usuario);
+		$criteria->compare('or_datahora',$this->or_datahora,true);
 		$criteria->compare('destino',$this->destino);
-		$criteria->compare('datahora',$this->datahora,true);
-		$criteria->compare('usuario',$this->usuario);
 		$criteria->compare('estado',$this->estado,true);
 		$criteria->compare('despacho',$this->despacho,true);
 
@@ -108,5 +114,23 @@ class Tramitacao extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+	
+	protected function beforeSave()
+	{
+		if ($this->isNewRecord)
+		{
+			$this->origem=Yii::app()->getModule('user')->user()->profile->unidade->id;
+			$this->or_usuario=Yii::app()->getModule('user')->user()->id;
+			$this->or_datahora=new CDbExpression('NOW()');
+		}
+		
+		return parent::beforeSave();
+	}
+	
+	public function getUsuarioText()
+	{
+		$profile = $this->us->profile;
+		return $profile->first_name.' '.$profile->last_name;
 	}
 }

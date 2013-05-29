@@ -103,8 +103,11 @@ class Unidade extends CActiveRecord
 		return parent::model($className);
 	}
 	
-	public function listAll()
+	public function listAll($origem=null)
 	{
-		return CHtml::listData($this->findAll(array('order'=>'nome')),'id','nome');
+		$criteria=new CDbCriteria();
+		$criteria->order='nome';
+		$criteria->compare('id','<>'.$origem);
+		return CHtml::listData($this->findAll($criteria),'id','nome');
 	}
 }

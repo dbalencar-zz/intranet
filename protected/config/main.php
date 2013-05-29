@@ -64,12 +64,16 @@ return array(
 			'loginUrl' => array('/user/login'),
 			
 			# page after login
-			'returnUrl' => array('/user/profile'),
+			'returnUrl' => array('/protocolo'),
 			
 			# page after logout
 			'returnLogoutUrl' => array('/user/login'),
+	
+			'relations' => array(
+				'protocolo'=>array(CActiveRecord::HAS_MANY, 'Protocolo', 'usuario'),
+			),
 				
-			'profileRelations'=>array(						
+			'profileRelations' => array(						
 				'unidade'=>array(CActiveRecord::BELONGS_TO, 'Unidade', 'unidade_id'),
 			),	
 		),
@@ -108,6 +112,8 @@ return array(
 			'username' => 'intranet',
 			'password' => 'intranet',
 			'charset' => 'utf8',
+			'enableParamLogging'=>true,
+			'enableProfiling'=>true,	
 		),
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
@@ -120,6 +126,12 @@ return array(
 					'class'=>'CFileLogRoute',
 					'levels'=>'error, warning',
 				),
+				/*
+				array(
+					'class'=>'CProfileLogRoute',
+					'report'=>'summary',
+				),
+				*/
 				// uncomment the following to show log messages on web pages
 				/*
 				array(

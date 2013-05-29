@@ -3,7 +3,8 @@
 /* @var $model Protocolo */
 
 $this->breadcrumbs=array(
-	'Protocolo',
+	'Protocolo'=>array('pendentes'),
+	'Pesquisar'
 );
 
 $this->menu=array(
@@ -24,33 +25,39 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Protocolos</h1>
+<h1>Pesquisar</h1>
 
-<p>
-Você pode opcionalmente usar um operador de comparação (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
-ou <b>=</b>) no início de cada um de seus valores de busca para especificar como a comparação deve ser feita.
-</p>
+<br/>
 
-<?php echo CHtml::link('Busca Avançada','#',array('class'=>'search-button')); ?>
-<div class="search-form" style="display:none">
-<?php $this->renderPartial('_search',array(
-	'model'=>$model,
+<?php $form=$this->beginWidget('CActiveForm', array(
+	'action'=>Yii::app()->createUrl($this->route),
+	'method'=>'get',
 )); ?>
-</div><!-- search-form -->
+
+	<div class="row">
+		<?php echo $form->label($model,'id'); ?>
+		<?php echo $form->textField($model,'id',array('size'=>10,'maxlength'=>10)); ?>
+		<?php echo CHtml::submitButton('Pesquisar'); ?>
+	</div>
+
+<?php $this->endWidget(); ?>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'protocolo-grid',
 	'dataProvider'=>$model->search(),
-	'filter'=>$model,
 	'columns'=>array(
 		'id',
 		'documento',
 		'origem',
 		'datahora',
-		'usuario',
+		array(
+			'name'=>'usuario',
+			'value'=>'$data->usuarioText',
+		),
 		'observacao',
 		array(
 			'class'=>'CButtonColumn',
+			'template'=>'{view}',
 		),
 	),
 )); ?>

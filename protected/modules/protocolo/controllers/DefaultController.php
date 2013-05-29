@@ -2,7 +2,7 @@
 
 class DefaultController extends RController
 {
-	public $defaultAction='admin';
+	public $defaultAction='pendentes';
 	
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -13,50 +13,76 @@ class DefaultController extends RController
 	/**
 	 * @return array action filters
 	 */
+	
 	public function filters()
 	{
 		return array(
-			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
+			'rights',
 		);
 	}
-
-	/**
-	 * Specifies the access control rules.
-	 * This method is used by the 'accessControl' filter.
-	 * @return array access control rules
-	 */
-	public function accessRules()
+	
+	public function allowedActions()
 	{
-		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
-			),
-			array('deny',  // deny all users
-				'users'=>array('*'),
-			),
-		);
+		return 'index, pendentes';
 	}
 
+	public function actionPendentes()
+	{
+		$pendentes=new CDbCriteria;
+		$pendentes->compare('origem', Yii::app()->getModule('user')->user()->profile->unidade->id);
+		$pendentes->addCondition('de_datahora is NULL');
+		$pendentes->compare('destino',Yii::app()->getModule('user')->user()->profile->unidade->id, false, 'OR');
+		$pendentes->order='de_datahora desc';
+		$pendentesProvider=new CActiveDataProvider('Tramitacao', array('criteria'=>$pendentes));
+		
+		$this->render('pendentes', array(
+			'pendentesProvider'=>$pendentesProvider,
+		));
+	}
+	
+	public function actionFile()
+	{
+		$this->render('file');
+	}
+	
+	public function actionReceber($id)
+	{
+		$model=$this->loadTramitacao($id);
+		$model->de_usuario=Yii::app()->getModule('user')->user()->id;
+		$model->de_datahora=new CDbExpression('NOW()');
+		$model->save();
+		
+		$this->redirect(array('pendentes'));
+	}
+	
+	public function actionMove($id)
+	{
+		$model=new Tramitacao();
+	
+		$model->protocolo_id=$id;
+	
+		if(isset($_POST['Tramitacao']))
+		{
+			$model->attributes=$_POST['Tramitacao'];
+			if($model->save())
+				$this->redirect(array('default/view','id'=>$model->protocolo_id));
+		}
+	
+		$this->render('move',array(
+			'model'=>$model,
+		));
+	}
+	
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
 	public function actionView($id)
 	{
-		$protocolo=$this->loadModel($id);
+		$protocolo=$this->loadProtocolo($id);
 		
-		$criteria=new CDbCriteria;
-		$criteria->addCondition(array('protocolo_id'=>'id'));
+		$criteria=new CDbCriteria();
+		$criteria->compare('protocolo_id',$id);
 		$dataProvider=new CActiveDataProvider('Tramitacao', array('criteria'=>$criteria));
 		
 		$this->render('view',array(
@@ -95,7 +121,7 @@ class DefaultController extends RController
 	 */
 	public function actionUpdate($id)
 	{
-		$model=$this->loadModel($id);
+		$model=$this->loadProtocolo($id);
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -119,7 +145,7 @@ class DefaultController extends RController
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
+		$this->loadProtocolo($id)->delete();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
@@ -148,9 +174,17 @@ class DefaultController extends RController
 	 * @return Protocolo the loaded model
 	 * @throws CHttpException
 	 */
-	public function loadModel($id)
+	public function loadProtocolo($id)
 	{
 		$model=Protocolo::model()->findByPk($id);
+		if($model===null)
+			throw new CHttpException(404,'The requested page does not exist.');
+		return $model;
+	}
+	
+	public function loadTramitacao($id)
+	{
+		$model=Tramitacao::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -167,5 +201,13 @@ class DefaultController extends RController
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+	
+	public function actionPrint($id)
+	{
+		$this->layout='protocolo';
+		$this->render('print',array(
+				'model'=>$this->loadTramitacao($id),
+		));
 	}
 }
