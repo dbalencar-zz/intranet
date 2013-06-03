@@ -35,7 +35,7 @@ class Protocolo extends CActiveRecord
 			array('usuario', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id', 'safe', 'on'=>'search'),
+			array('id, documento, origem', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -84,7 +84,9 @@ class Protocolo extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id,true);
+		$criteria->compare('id',$this->id,false);
+		$criteria->compare('documento',$this->documento,true);
+		$criteria->compare('origem',$this->origem,true);
 		$criteria->order='datahora desc';
 
 		return new CActiveDataProvider($this, array(

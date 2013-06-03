@@ -23,16 +23,24 @@ class DefaultController extends RController
 	
 	public function allowedActions()
 	{
-		return 'index, suggestedTags';
+		return 'index, admin, view, suggestedTags';
 	}
 
 	public function actionPendentes()
 	{
+		
+		$lastMoves=new CDbCriteria;
+		$lastMoves->join='LEFT JOIN tramitacao t2 ON t.id < t2.id and t.protocolo_id = t2.protocolo_id';
+		$lastMoves->addCondition('t2.id is NULL');
+		
 		$pendentes=new CDbCriteria;
-		$pendentes->compare('origem', Yii::app()->getModule('user')->user()->profile->unidade->id);
-		$pendentes->addCondition('de_datahora is NULL');
-		$pendentes->compare('destino',Yii::app()->getModule('user')->user()->profile->unidade->id, false, 'OR');
-		$pendentes->order='de_datahora desc';
+		$pendentes->compare('t.origem', Yii::app()->getModule('user')->user()->profile->unidade->id, false, 'AND');
+		$pendentes->addCondition('t.de_datahora is NULL');
+		$pendentes->compare('t.destino',Yii::app()->getModule('user')->user()->profile->unidade->id, false, 'OR');
+
+		$pendentes->mergeWith($lastMoves);
+				
+		$pendentes->order='t.de_datahora desc';
 		$pendentesProvider=new CActiveDataProvider('Tramitacao', array('criteria'=>$pendentes));
 		
 		$this->render('pendentes', array(
