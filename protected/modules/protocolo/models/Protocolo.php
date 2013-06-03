@@ -13,6 +13,7 @@
  */
 class Protocolo extends CActiveRecord
 {	
+	private $_destino = null;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -120,5 +121,15 @@ class Protocolo extends CActiveRecord
 	{
 		$profile = $this->us->profile;
 		return $profile->first_name.' '.$profile->last_name.' ('.$profile->unidade->nome.')';
+	}
+	
+	public function getDestino()
+	{
+		return $this->_destino;
+	}
+	
+	public function setDestino($destino)
+	{
+		$this->_destino=$destino;
 	}
 }

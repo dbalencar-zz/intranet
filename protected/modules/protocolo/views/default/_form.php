@@ -32,6 +32,12 @@
 	</div>
 	
 	<div class="row">
+		<?php echo $form->labelEx($model,'destino'); ?>
+		<?php echo $form->dropDownList($model,'destino',Unidade::model()->listAll(Yii::app()->getModule('user')->user()->profile->unidade_id)); ?>
+		<?php echo $form->error($model,'destino'); ?>
+	</div>
+	
+	<div class="row">
 		<?php echo $form->labelEx($model,'observacao'); ?>
 		<?php echo $form->textField($model,'observacao',array('size'=>60,'maxlength'=>100)); ?>
 		<?php echo $form->error($model,'observacao'); ?>

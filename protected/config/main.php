@@ -127,10 +127,12 @@ return array(
 					'class'=>'CFileLogRoute',
 					'levels'=>'error, warning',
 				),
+				/*
 				array(
 					'class'=>'CProfileLogRoute',
 					'report'=>'summary',
 				),
+				*/
 				// uncomment the following to show log messages on web pages
 				/*
 				array(

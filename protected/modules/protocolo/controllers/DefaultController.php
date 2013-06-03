@@ -114,8 +114,25 @@ class DefaultController extends RController
 		if(isset($_POST['Protocolo']))
 		{
 			$model->attributes=$_POST['Protocolo'];
+			$model->destino=$_POST['Protocolo']['destino'];
+			
+			$transaction=Yii::app()->db->beginTransaction();
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+			{
+				$tramitacao=new Tramitacao();
+				$tramitacao->protocolo_id=$model->id;
+				$tramitacao->origem=Yii::app()->getModule('user')->user()->profile->unidade_id;
+				$tramitacao->or_usuario=$model->usuario;
+				$tramitacao->or_datahora=$model->datahora;
+				$tramitacao->destino=$model->destino;
+				
+				if($tramitacao->save())
+				{
+					$transaction->commit();				
+					$this->redirect(array('view','id'=>$model->id));
+				}
+			}
+			$transaction->rollBack();
 		}
 
 		$this->render('create',array(
