@@ -13,7 +13,7 @@
 	<tr>
 		<td colspan="4" style="text-align: center; font-size:x-large; font-weight: bold;">PROTOCOLO</td>
 		<td style="text-align: center; font-size: medium; font-weight: bold;"><?php echo $model->protocolo_id; ?></td>
-		<td>Data: <?php echo $data = Yii::app()->dateFormatter->formatDateTime($model->or_datahora,'medium',null); ?></td>
+		<td style="text-align: center; font-size: large; font-weight: bold;">Data: <?php echo $data = Yii::app()->dateFormatter->formatDateTime($model->or_datahora,'medium','medium'); ?></td>
 	</tr>
 </table>
 <table width="900">
@@ -38,7 +38,7 @@
 </table>
 <table width="900">
 	<tr>
-		<td colspan="2">DESPACHO (<?php echo $model->usuarioText; ?>): <p><?php echo $model->despacho; ?></p></td>
+		<td colspan="2">DESPACHO (<?php echo $model->usuarioOrigemText; ?>): <p><?php echo $model->despacho; ?></p></td>
 	</tr>
 	<tr style="min-height: 300px;">
 		<td style="width: 50%;">Recebido por <br/><br/><br/></td>

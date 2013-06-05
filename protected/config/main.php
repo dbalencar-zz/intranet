@@ -82,7 +82,9 @@ return array(
 			//'install'=>true,
 		),
 		'unidade',
-		'protocolo',
+		'protocolo'=>array(
+			'defaultController' => 'default',
+		),
 	),
 
 	// application components

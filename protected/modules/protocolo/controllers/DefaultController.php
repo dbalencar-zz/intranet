@@ -23,7 +23,7 @@ class DefaultController extends RController
 	
 	public function allowedActions()
 	{
-		return 'index, admin, view, suggestedTags';
+		return 'index, admin, view, tramitacao, suggestedTags';
 	}
 
 	public function actionPendentes()
@@ -190,6 +190,15 @@ class DefaultController extends RController
 
 		$this->render('admin',array(
 			'model'=>$model,
+		));
+	}
+	
+	public function actionTramitacao($id)
+	{
+		$model=$this->loadTramitacao($id);
+	
+		$this->render('tramitacao',array(
+				'model'=>$model,
 		));
 	}
 

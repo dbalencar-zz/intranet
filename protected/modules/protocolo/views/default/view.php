@@ -2,10 +2,18 @@
 /* @var $this ProtocoloController */
 /* @var $model Protocolo */
 
-$this->breadcrumbs=array(
-	'Protocolo'=>array('/protocolo'),
-	$model->id,
-);
+if (Yii::app()->user->checkAccess('Authenticated'))
+{
+	$this->breadcrumbs=array(
+		'Protocolo'=>array('/protocolo'),
+		$model->id,
+	);
+} else {
+	$this->breadcrumbs=array(
+		'Protocolo'=>array('/protocolo/default/admin'),
+		$model->id,
+	);
+}
 
 $this->menu=array(
 	array('label'=>'Pesquisar', 'url'=>array('admin')),
@@ -20,6 +28,7 @@ $this->menu=array(
 	'attributes'=>array(
 		'documento',
 		'origem',
+		'assunto',
 		'datahora',
 		'usuarioText',
 		'observacao',
@@ -38,5 +47,14 @@ $this->menu=array(
 		'or_datahora',
 		'de.sigla',
 		'de_datahora',
+		array(
+			'class'=>'CButtonColumn',
+			'template'=>'{view}',
+			'buttons'=>array(
+				'view'=>array(
+					'url'=>'Yii::app()->createUrl("/protocolo/default/tramitacao", array("id"=>$data->id))',
+				),
+			),
+		),
 	),
 )); ?>

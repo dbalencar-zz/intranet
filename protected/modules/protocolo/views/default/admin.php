@@ -2,10 +2,17 @@
 /* @var $this ProtocoloController */
 /* @var $model Protocolo */
 
-$this->breadcrumbs=array(
-	'Protocolo'=>array('pendentes'),
-	'Pesquisar'
-);
+if (Yii::app()->user->checkAccess('Authenticated'))
+{
+	$this->breadcrumbs=array(
+		'Protocolo'=>array('/protocolo'),
+		'Pesquisar'
+	);
+} else {
+	$this->breadcrumbs=array(
+			'Protocolo',
+	);
+}
 
 $this->menu=array(
 	array('label'=>'Protocolar', 'url'=>array('create'), 'visible'=>Yii::app()->user->checkAccess('Protocolista')),

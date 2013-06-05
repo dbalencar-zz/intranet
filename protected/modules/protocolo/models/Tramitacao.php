@@ -49,7 +49,8 @@ class Tramitacao extends CActiveRecord
 			'pr'=>array(self::BELONGS_TO,'Protocolo','protocolo_id'),
 			'or'=>array(self::BELONGS_TO,'Unidade','origem'),
 			'de'=>array(self::BELONGS_TO,'Unidade','destino'),
-			'us'=>array(self::BELONGS_TO,'User','or_usuario'),
+			'usor'=>array(self::BELONGS_TO,'User','or_usuario'),
+			'usde'=>array(self::BELONGS_TO,'User','de_usuario'),
 		);
 	}
 
@@ -63,11 +64,15 @@ class Tramitacao extends CActiveRecord
 			'protocolo_id' => 'Protocolo',
 			'origem' => 'Origem',
 			'or.sigla' => 'Origem',
+			'or.nome' => 'Origem',
 			'or_usuario' => 'Usuário',
+			'usuarioOrigemText' => 'Usuário',
 			'or_datahora' => 'Data/Hora',
 			'destino' => 'Destino',
 			'de.sigla' => 'Destino',
+			'de.nome' => 'Destino',
 			'de_usuario' => 'Usuário',
+			'usuarioDestinoText' => 'Usuário',
 			'de_datahora' => 'Data/Hora',
 			'arquivado' => 'Arquivado',
 			'despacho' => 'Despacho',
@@ -128,9 +133,21 @@ class Tramitacao extends CActiveRecord
 		return parent::beforeSave();
 	}
 	
-	public function getUsuarioText()
+	public function getUsuarioOrigemText()
 	{
-		$profile = $this->us->profile;
-		return $profile->first_name.' '.$profile->last_name;
+		if(!isset($this->usor))
+			return null;
+		
+		$profile = $this->usor->profile;
+		return $profile->first_name.' '.$profile->last_name.' ('.$profile->unidade->nome.')';
+	}
+	
+	public function getUsuarioDestinoText()
+	{
+		if(!isset($this->usde))
+			return null;
+		
+		$profile = $this->usde->profile;
+		return $profile->first_name.' '.$profile->last_name.' ('.$profile->unidade->nome.')';
 	}
 }

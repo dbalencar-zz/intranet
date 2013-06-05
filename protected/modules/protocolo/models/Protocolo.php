@@ -30,7 +30,7 @@ class Protocolo extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('documento, origem', 'required'),
+			array('documento, origem, assunto', 'required'),
 			array('documento', 'length', 'max'=>50),
 			array('origem, observacao', 'length', 'max'=>100),
 			array('usuario', 'length', 'max'=>10),
