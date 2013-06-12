@@ -53,8 +53,18 @@ $('.search-form form').submit(function(){
 	</div>
 	
 	<div class="row">
+		<?php echo $form->label($model,'assunto'); ?>
+		<?php echo $form->textField($model,'assunto',array('size'=>25,'maxlength'=>100)); ?>
+	</div>
+	
+	<div class="row">
 		<?php echo $form->label($model,'origem'); ?>
 		<?php echo $form->textField($model,'origem',array('size'=>25,'maxlength'=>100)); ?>
+	</div>
+	
+	<div class="row">
+		<?php echo $form->label($model,'arquivado'); ?>
+		<?php echo $form->dropDownList($model,'arquivado',$model->simNaoOptions,array('empty'=>'Todos')); ?>
 	</div>
 	
 	<div class="row buttons">
@@ -70,13 +80,9 @@ $('.search-form form').submit(function(){
 	'columns'=>array(
 		'id',
 		'documento',
+		'assunto',
 		'origem',
 		'datahora',
-		array(
-			'name'=>'usuario',
-			'value'=>'$data->usuarioText',
-		),
-		'observacao',
 		array(
 			'class'=>'CButtonColumn',
 			'template'=>'{view}',

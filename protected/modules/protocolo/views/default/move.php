@@ -3,11 +3,13 @@
 /* @var $model Tramitacao */
 /* @var $form CActiveForm */
 
-$this->breadcrumbs=array(
-		'Protocolo'=>array('default/admin'),
-		$model->protocolo_id=>array('default/view', 'id'=>$model->protocolo_id),
+if (!CHtml::submitButton($model->isNewRecord)) {
+	$this->breadcrumbs=array(
+		'Protocolo'=>array('admin'),
+		$model->protocolo_id=>array('view', 'id'=>$model->protocolo_id),
 		'Tramitar',
-);
+	);
+}
 ?>
 
 <h1>Tramitar Protocolo #<?php echo $model->protocolo_id; ?></h1>
@@ -51,9 +53,8 @@ $this->breadcrumbs=array(
 		<?php echo $form->error($model,'despacho'); ?>
 	</div>
 
-
 	<div class="row buttons">
-		<?php echo CHtml::submitButton('Tramitar'); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? 'Tramitar' : 'Atualizar'); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

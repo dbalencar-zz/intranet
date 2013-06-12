@@ -4,7 +4,7 @@
 
 $this->breadcrumbs=array(
 	'Protocolo'=>array('admin'),
-	$model->id=>array('view','id'=>$model->id),
+	$model->protocolo_id=>array('view','id'=>$model->protocolo_id),
 	'Editar',
 );
 
@@ -13,6 +13,4 @@ $this->menu=array(
 );
 ?>
 
-<h1>Protocolo #<?php echo $model->id; ?></h1>
-
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('move', array('model'=>$model)); ?>

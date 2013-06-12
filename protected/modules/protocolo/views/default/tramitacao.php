@@ -29,11 +29,12 @@ $this->menu=array(
 	'data'=>$model->pr,
 	'attributes'=>array(
 		'documento',
-		'origem',
 		'assunto',
+		'origem',
 		'datahora',
 		'usuarioText',
 		'observacao',
+		'arquivadoText',
 	),
 )); ?>
 

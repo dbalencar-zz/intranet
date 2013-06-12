@@ -11,9 +11,9 @@
 <center>
 <table width="900" >
 	<tr>
-		<td colspan="4" style="text-align: center; font-size:x-large; font-weight: bold;">PROTOCOLO</td>
+		<td colspan="4" style="text-align: center; font-size:x-large; font-weight: bold;">PROTOCOLO #</td>
 		<td style="text-align: center; font-size: medium; font-weight: bold;"><?php echo $model->protocolo_id; ?></td>
-		<td style="text-align: center; font-size: large; font-weight: bold;">Data: <?php echo $data = Yii::app()->dateFormatter->formatDateTime($model->or_datahora,'medium','medium'); ?></td>
+		<td style="text-align: center; font-size: large; font-weight: bold;">Tramitado em <?php echo $data = Yii::app()->dateFormatter->formatDateTime($model->or_datahora,'medium','medium'); ?></td>
 	</tr>
 </table>
 <table width="900">
@@ -24,13 +24,16 @@
 		<td align="right">Documento:</td><td><?php echo $model->pr->documento; ?></td>
 	</tr>
 	<tr>
-		<td align="right">Origem:</td><td><?php echo $model->pr->origem; ?></td>
+		<td align="right">Assunto:</td><td><?php echo $model->pr->assunto; ?></td>
 	</tr>
 	<tr>
-		<td align="right">Data/Hora:</td><td><?php echo Yii::app()->dateFormatter->formatDateTime($model->pr->datahora,'medium','medium'); ?></td>
+		<td align="right">Interessado:</td><td><?php echo $model->pr->origem; ?></td>
 	</tr>
 	<tr>
-		<td align="right">Protocolado por:</td><td><?php echo $model->pr->usuarioText; ?></td>
+		<td align="right">Protocolado:</td><td><?php echo Yii::app()->dateFormatter->formatDateTime($model->pr->datahora,'medium','medium'); ?></td>
+	</tr>
+	<tr>
+		<td align="right">Protocolista:</td><td><?php echo $model->pr->usuarioText; ?></td>
 	</tr>
 	<tr>
 		<td align="right">Observação:</td><td><?php echo $model->pr->observacao; ?></td>

@@ -28,7 +28,7 @@ class SiteController extends RController
 	
 	public function allowedActions()
 	{
-		return 'index, page, contact, suggestedTags';
+		return 'index, page, contact, captcha, suggestedTags';
 	}
 
 	/**

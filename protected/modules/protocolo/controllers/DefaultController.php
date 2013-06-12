@@ -33,14 +33,20 @@ class DefaultController extends RController
 		$lastMoves->join='LEFT JOIN tramitacao t2 ON t.id < t2.id and t.protocolo_id = t2.protocolo_id';
 		$lastMoves->addCondition('t2.id is NULL');
 		
+		$arquivados=new CDbCriteria;
+		$arquivados->join='LEFT JOIN protocolo p ON t.protocolo_id = p.id';
+		$arquivados->compare('p.arquivado','<>1');
+		
+		$arquivados->mergeWith($lastMoves);
+		
 		$pendentes=new CDbCriteria;
 		$pendentes->compare('t.origem', Yii::app()->getModule('user')->user()->profile->unidade->id, false, 'AND');
 		$pendentes->addCondition('t.de_datahora is NULL');
 		$pendentes->compare('t.destino',Yii::app()->getModule('user')->user()->profile->unidade->id, false, 'OR');
 
-		$pendentes->mergeWith($lastMoves);
+		$pendentes->mergeWith($arquivados);
 				
-		$pendentes->order='t.de_datahora desc';
+		$pendentes->order='t.or_datahora desc';
 		$pendentesProvider=new CActiveDataProvider('Tramitacao', array('criteria'=>$pendentes));
 		
 		$this->render('pendentes', array(
@@ -60,6 +66,17 @@ class DefaultController extends RController
 		$model->de_datahora=new CDbExpression('NOW()');
 		$model->save();
 		
+		$this->redirect(array('pendentes'));
+	}
+	
+	public function actionArquivar($id)
+	{
+		$model=$this->loadProtocolo($id);
+		$model->arquivado=true;		
+		$model->ar_usuario=Yii::app()->getModule('user')->user()->id;
+		$model->ar_datahora=new CDbExpression('NOW()');
+		$model->save();
+	
 		$this->redirect(array('pendentes'));
 	}
 	
@@ -147,16 +164,17 @@ class DefaultController extends RController
 	 */
 	public function actionUpdate($id)
 	{
-		$model=$this->loadProtocolo($id);
+		$model=$this->loadTramitacao($id);
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Protocolo']))
+		if(isset($_POST['Tramitacao']))
 		{
-			$model->attributes=$_POST['Protocolo'];
+			$model->attributes=$_POST['Tramitacao'];
+			$model->or_usuario=Yii::app()->getModule('user')->user()->id;
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('view','id'=>$model->protocolo_id));
 		}
 
 		$this->render('update',array(
