@@ -57,7 +57,7 @@ $this->menu=array(
 					'imageUrl'=>Yii::app()->request->baseUrl.'/images/arquivar.png',
 					'url'=>'Yii::app()->createUrl("/protocolo/default/arquivar", array("id"=>$data->protocolo_id))',
 					'options'=>array('title'=>'Arquivar','onClick'=>"if(confirm('Confirma o arquivamento?'))return true;else return false"),
-					'visible'=>'isset($data->de_datahora)',
+					'visible'=>'isset($data->de_datahora) && Yii::app()->user->checkAccess("Arquivista")',
 				),
 				'imprimir'=>array(
 					'label'=>'Imprimir',
