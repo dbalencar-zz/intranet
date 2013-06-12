@@ -7,8 +7,8 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Protocolar', 'url'=>array('create'), 'visible'=>Yii::app()->user->checkAccess('Protocolista')),
-	array('label'=>'Pesquisar', 'url'=>array('admin')),
+	array('label'=>'Protocolar', 'url'=>array('protocolar'), 'visible'=>Yii::app()->user->checkAccess('Protocolista')),
+	array('label'=>'Pesquisar', 'url'=>array('pesquisar')),
 );
 ?>
 
@@ -37,7 +37,7 @@ $this->menu=array(
 			'buttons'=>array(
 				'view'=>array(
 					'imageUrl'=>Yii::app()->request->baseUrl.'/images/exibir.png',
-					'url'=>'Yii::app()->createUrl("/protocolo/default/view", array("id"=>$data->protocolo_id))',
+					'url'=>'Yii::app()->createUrl("/protocolo/default/protocolo", array("id"=>$data->protocolo_id))',
 				),
 				'receber'=>array(
 					'label'=>'Receber',
@@ -49,7 +49,7 @@ $this->menu=array(
 				'tramitar'=>array(
 					'label'=>'Tramitar',
 					'imageUrl'=>Yii::app()->request->baseUrl.'/images/tramitar.png',
-					'url'=>'Yii::app()->createUrl("/protocolo/default/move", array("id"=>$data->protocolo_id))',
+					'url'=>'Yii::app()->createUrl("/protocolo/default/tramitar", array("id"=>$data->protocolo_id))',
 					'visible'=>'isset($data->de_datahora)',
 				),
 				'arquivar'=>array(
@@ -62,13 +62,13 @@ $this->menu=array(
 				'imprimir'=>array(
 					'label'=>'Imprimir',
 					'imageUrl'=>Yii::app()->request->baseUrl.'/images/imprimir.png',
-					'url'=>'Yii::app()->createUrl("/protocolo/default/print", array("id"=>$data->id))',
+					'url'=>'Yii::app()->createUrl("/protocolo/default/imprimir", array("id"=>$data->id))',
 					'visible'=>'$data->origem==Yii::app()->getModule("user")->user()->unidade && !isset($data->de_datahora)',
 				),
 				'update'=>array(
 					'label'=>'Editar',
 					'imageUrl'=>Yii::app()->request->baseUrl.'/images/editar.png',
-					'url'=>'Yii::app()->createUrl("/protocolo/default/update", array("id"=>$data->id))',
+					'url'=>'Yii::app()->createUrl("/protocolo/default/destinar", array("id"=>$data->id))',
 					'visible'=>'$data->origem==Yii::app()->getModule("user")->user()->unidade && !isset($data->de_datahora)',
 				),
 			),

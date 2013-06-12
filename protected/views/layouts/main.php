@@ -32,8 +32,8 @@
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
 				array('label'=>'Início', 'url'=>array('/site/index')),
-				array('label'=>'Protocolo', 'url'=>array('/protocolo'), 'visible'=>Yii::app()->user->checkAccess('Authenticated')),
-				array('label'=>'Protocolo', 'url'=>array('/protocolo/default/admin'), 'visible'=>!Yii::app()->user->checkAccess('Authenticated')),
+				array('label'=>'Protocolo', 'url'=>array('/protocolo'), 'visible'=>Yii::app()->user->checkAccess('Tramitador')),
+				array('label'=>'Protocolo', 'url'=>array('/protocolo/default/pesquisar'), 'visible'=>!Yii::app()->user->checkAccess('Tramitador')),
 				array('label'=>'Sobre', 'url'=>array('/site/page', 'view'=>'about')),
 				array('label'=>'Contato', 'url'=>array('/site/contact')),
 				array('label'=>'Login', 'url'=>array('/user/login'), 'visible'=>Yii::app()->user->isGuest),

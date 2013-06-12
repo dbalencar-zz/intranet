@@ -2,7 +2,7 @@
 /* @var $this ProtocoloController */
 /* @var $model Protocolo */
 
-if (Yii::app()->user->checkAccess('Authenticated'))
+if (Yii::app()->user->checkAccess('Tramitador'))
 {
 	$this->breadcrumbs=array(
 		'Protocolo'=>array('/protocolo'),
@@ -15,7 +15,7 @@ if (Yii::app()->user->checkAccess('Authenticated'))
 }
 
 $this->menu=array(
-	array('label'=>'Protocolar', 'url'=>array('create'), 'visible'=>Yii::app()->user->checkAccess('Protocolista')),
+	array('label'=>'Protocolar', 'url'=>array('pesquisar'), 'visible'=>Yii::app()->user->checkAccess('Protocolista')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -86,6 +86,12 @@ $('.search-form form').submit(function(){
 		array(
 			'class'=>'CButtonColumn',
 			'template'=>'{view}',
+			'buttons'=>array(
+				'view'=>array(
+					'imageUrl'=>Yii::app()->request->baseUrl.'/images/exibir.png',
+					'url'=>'Yii::app()->createUrl("/protocolo/default/protocolo", array("id"=>$data->id))',
+				),
+			),
 		),
 	),
 )); ?>

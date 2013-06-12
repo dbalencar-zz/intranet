@@ -6,20 +6,20 @@ if (Yii::app()->user->checkAccess('Authenticated'))
 {
 	$this->breadcrumbs=array(
 		'Protocolo'=>array('/protocolo'),
-		$model->protocolo_id=>array('/protocolo/default/view', 'id'=>$model->protocolo_id),
+		$model->protocolo_id=>array('/protocolo/default/protocolo', 'id'=>$model->protocolo_id),
 		'Tramitação',
 	);
 } else {
 	$this->breadcrumbs=array(
-		'Protocolo'=>array('/protocolo/default/admin'),
-		$model->protocolo_id=>array('/protocolo/default/view', 'id'=>$model->protocolo_id),
+		'Protocolo'=>array('/protocolo/default/pesquisar'),
+		$model->protocolo_id=>array('/protocolo/default/protocolo', 'id'=>$model->protocolo_id),
 		'Tramitação',
 	);
 }
 
 $this->menu=array(
-	array('label'=>'Pesquisar', 'url'=>array('admin')),
-	array('label'=>'Protocolar', 'url'=>array('create'), 'visible'=>Yii::app()->user->checkAccess('Protocolista')),
+	array('label'=>'Pesquisar', 'url'=>array('pesquisar')),
+	array('label'=>'Protocolar', 'url'=>array('protocolar'), 'visible'=>Yii::app()->user->checkAccess('Protocolista')),
 );
 ?>
 

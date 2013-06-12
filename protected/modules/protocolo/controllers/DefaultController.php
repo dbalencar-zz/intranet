@@ -2,7 +2,7 @@
 
 class DefaultController extends RController
 {
-	public $defaultAction='pendentes';
+	public $defaultAction='inbox';
 	
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -23,10 +23,10 @@ class DefaultController extends RController
 	
 	public function allowedActions()
 	{
-		return 'index, admin, view, tramitacao, suggestedTags';
+		return 'pesquisar, protocolo, tramitacao, suggestedTags';
 	}
 
-	public function actionPendentes()
+	public function actionInbox()
 	{
 		
 		$lastMoves=new CDbCriteria;
@@ -49,14 +49,9 @@ class DefaultController extends RController
 		$pendentes->order='t.or_datahora desc';
 		$pendentesProvider=new CActiveDataProvider('Tramitacao', array('criteria'=>$pendentes));
 		
-		$this->render('pendentes', array(
+		$this->render('inbox', array(
 			'pendentesProvider'=>$pendentesProvider,
 		));
-	}
-	
-	public function actionFile()
-	{
-		$this->render('file');
 	}
 	
 	public function actionReceber($id)
@@ -66,7 +61,7 @@ class DefaultController extends RController
 		$model->de_datahora=new CDbExpression('NOW()');
 		$model->save();
 		
-		$this->redirect(array('pendentes'));
+		$this->redirect(array('inbox'));
 	}
 	
 	public function actionArquivar($id)
@@ -77,10 +72,10 @@ class DefaultController extends RController
 		$model->ar_datahora=new CDbExpression('NOW()');
 		$model->save();
 	
-		$this->redirect(array('pendentes'));
+		$this->redirect(array('inbox'));
 	}
 	
-	public function actionMove($id)
+	public function actionTramitar($id)
 	{
 		$model=new Tramitacao();
 	
@@ -90,38 +85,19 @@ class DefaultController extends RController
 		{
 			$model->attributes=$_POST['Tramitacao'];
 			if($model->save())
-				$this->redirect(array('default/view','id'=>$model->protocolo_id));
+				$this->redirect(array('inbox','id'=>$model->protocolo_id));
 		}
 	
-		$this->render('move',array(
+		$this->render('tramitar',array(
 			'model'=>$model,
 		));
 	}
 	
 	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
-	public function actionView($id)
-	{
-		$protocolo=$this->loadProtocolo($id);
-		
-		$criteria=new CDbCriteria();
-		$criteria->compare('protocolo_id',$id);
-		$criteria->order='or_datahora desc';
-		$dataProvider=new CActiveDataProvider('Tramitacao', array('criteria'=>$criteria));
-		
-		$this->render('view',array(
-			'model'=>$protocolo,
-			'dataProvider'=>$dataProvider,
-		));
-	}
-
-	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate()
+	public function actionProtocolar()
 	{
 		$model=new Protocolo;
 
@@ -146,13 +122,13 @@ class DefaultController extends RController
 				if($tramitacao->save())
 				{
 					$transaction->commit();				
-					$this->redirect(array('view','id'=>$model->id));
+					$this->redirect(array('protocolo','id'=>$model->id));
 				}
 			}
 			$transaction->rollBack();
 		}
 
-		$this->render('create',array(
+		$this->render('protocolar',array(
 			'model'=>$model,
 		));
 	}
@@ -162,7 +138,7 @@ class DefaultController extends RController
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdate($id)
+	public function actionDestinar($id)
 	{
 		$model=$this->loadTramitacao($id);
 
@@ -174,40 +150,45 @@ class DefaultController extends RController
 			$model->attributes=$_POST['Tramitacao'];
 			$model->or_usuario=Yii::app()->getModule('user')->user()->id;
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->protocolo_id));
+				$this->redirect(array('inbox'));
 		}
 
-		$this->render('update',array(
+		$this->render('destinar',array(
 			'model'=>$model,
 		));
 	}
 
 	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
-	public function actionDelete($id)
-	{
-		$this->loadProtocolo($id)->delete();
-
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-	}
-
-	/**
 	 * Manages all models.
 	 */
-	public function actionAdmin()
+	public function actionPesquisar()
 	{
 		$model=new Protocolo('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Protocolo']))
 			$model->attributes=$_GET['Protocolo'];
 
-		$this->render('admin',array(
+		$this->render('pesquisar',array(
 			'model'=>$model,
+		));
+	}
+	
+	/**
+	 * Displays a particular model.
+	 * @param integer $id the ID of the model to be displayed
+	 */
+	public function actionProtocolo($id)
+	{
+		$protocolo=$this->loadProtocolo($id);
+	
+		$criteria=new CDbCriteria();
+		$criteria->compare('protocolo_id',$id);
+		$criteria->order='or_datahora desc';
+		$dataProvider=new CActiveDataProvider('Tramitacao', array('criteria'=>$criteria));
+	
+		$this->render('protocolo',array(
+				'model'=>$protocolo,
+				'dataProvider'=>$dataProvider,
 		));
 	}
 	
@@ -256,10 +237,10 @@ class DefaultController extends RController
 		}
 	}
 	
-	public function actionPrint($id)
+	public function actionImprimir($id)
 	{
 		$this->layout='protocolo';
-		$this->render('print',array(
+		$this->render('imprimir',array(
 				'model'=>$this->loadTramitacao($id),
 		));
 	}

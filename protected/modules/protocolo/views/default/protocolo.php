@@ -2,7 +2,7 @@
 /* @var $this ProtocoloController */
 /* @var $model Protocolo */
 
-if (Yii::app()->user->checkAccess('Authenticated'))
+if (Yii::app()->user->checkAccess('Tramitador'))
 {
 	$this->breadcrumbs=array(
 		'Protocolo'=>array('/protocolo'),
@@ -10,14 +10,14 @@ if (Yii::app()->user->checkAccess('Authenticated'))
 	);
 } else {
 	$this->breadcrumbs=array(
-		'Protocolo'=>array('/protocolo/default/admin'),
+		'Protocolo'=>array('/protocolo/default/pesquisar'),
 		$model->id,
 	);
 }
 
 $this->menu=array(
-	array('label'=>'Pesquisar', 'url'=>array('admin')),
-	array('label'=>'Protocolar', 'url'=>array('create'), 'visible'=>Yii::app()->user->checkAccess('Protocolista')),
+	array('label'=>'Pesquisar', 'url'=>array('pesquisar')),
+	array('label'=>'Protocolar', 'url'=>array('protocolar'), 'visible'=>Yii::app()->user->checkAccess('Protocolista')),
 );
 ?>
 
@@ -53,6 +53,7 @@ $this->menu=array(
 			'template'=>'{view}',
 			'buttons'=>array(
 				'view'=>array(
+					'imageUrl'=>Yii::app()->request->baseUrl.'/images/exibir.png',
 					'url'=>'Yii::app()->createUrl("/protocolo/default/tramitacao", array("id"=>$data->id))',
 				),
 			),

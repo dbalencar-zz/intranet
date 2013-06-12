@@ -10183,3 +10183,298 @@ HTTP_REFERER=http://10.10.47.17/index.php?r=protocolo
 in /var/www/intranet/protected/modules/protocolo/controllers/DefaultController.php (133)
 in /var/www/intranet/protected/modules/rights/components/RController.php (36)
 in /var/www/intranet/index.php (13)
+2013/06/12 09:27:37 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /var/www/intranet/protected/modules/rights/components/RController.php:62
+Stack trace:
+#0 /var/www/intranet/protected/modules/rights/components/RightsFilter.php(57): RController->accessDenied()
+#1 /var/www/yii/framework/web/filters/CFilter.php(38): RightsFilter->preFilter(Object(CFilterChain))
+#2 /var/www/intranet/protected/modules/rights/components/RController.php(36): CFilter->filter(Object(CFilterChain))
+#3 /var/www/yii/framework/web/filters/CInlineFilter.php(58): RController->filterRights(Object(CFilterChain))
+#4 /var/www/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /var/www/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/yii/framework/web/CWebApplication.php(282): CController->run('')
+#8 /var/www/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('protocolo')
+#9 /var/www/yii/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#10 /var/www/intranet/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/index.php?r=protocolo
+HTTP_REFERER=http://10.10.47.17/
+---
+2013/06/12 09:30:26 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'O sistema não foi capaz de encontrar a ação "admin" solicitada.' in /var/www/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/yii/framework/web/CController.php(270): CController->missingAction('admin')
+#1 /var/www/yii/framework/web/CWebApplication.php(282): CController->run('admin')
+#2 /var/www/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('protocolo/defau...')
+#3 /var/www/yii/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#4 /var/www/intranet/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/index.php?r=protocolo/default/admin
+HTTP_REFERER=http://10.10.47.17/
+---
+2013/06/12 09:31:05 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'O sistema não foi capaz de encontrar a ação "admin" solicitada.' in /var/www/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/yii/framework/web/CController.php(270): CController->missingAction('admin')
+#1 /var/www/yii/framework/web/CWebApplication.php(282): CController->run('admin')
+#2 /var/www/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('protocolo/defau...')
+#3 /var/www/yii/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#4 /var/www/intranet/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/index.php?r=protocolo/default/admin
+HTTP_REFERER=http://10.10.47.17/index.php?r=user/login
+---
+2013/06/12 09:31:06 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Não foi possível resolver a requisição "protocolo/pesquisar".' in /var/www/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('protocolo/pesqu...')
+#1 /var/www/yii/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#2 /var/www/intranet/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/index.php?r=protocolo/pesquisar
+HTTP_REFERER=http://10.10.47.17/index.php?r=user/login
+---
+2013/06/12 09:31:09 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Não foi possível resolver a requisição "protocolo/pesquisar".' in /var/www/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('protocolo/pesqu...')
+#1 /var/www/yii/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#2 /var/www/intranet/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/index.php?r=protocolo/pesquisar
+HTTP_REFERER=http://10.10.47.17/index.php?r=user/login
+---
+2013/06/12 09:31:28 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'O sistema não foi capaz de encontrar a ação "view" solicitada.' in /var/www/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/yii/framework/web/CController.php(270): CController->missingAction('view')
+#1 /var/www/yii/framework/web/CWebApplication.php(282): CController->run('view')
+#2 /var/www/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('protocolo/defau...')
+#3 /var/www/yii/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#4 /var/www/intranet/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/index.php?r=protocolo/default/view&id=18
+HTTP_REFERER=http://10.10.47.17/index.php?r=protocolo/default/pesquisar
+---
+2013/06/12 09:34:42 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'O sistema não foi capaz de encontrar a ação "admin" solicitada.' in /var/www/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/yii/framework/web/CController.php(270): CController->missingAction('admin')
+#1 /var/www/yii/framework/web/CWebApplication.php(282): CController->run('admin')
+#2 /var/www/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('protocolo/defau...')
+#3 /var/www/yii/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#4 /var/www/intranet/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/index.php?r=protocolo/default/admin
+HTTP_REFERER=http://10.10.47.17/index.php?r=protocolo/default/protocolo&id=18
+---
+2013/06/12 09:36:57 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'O sistema não foi capaz de encontrar a ação "admin" solicitada.' in /var/www/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/yii/framework/web/CController.php(270): CController->missingAction('admin')
+#1 /var/www/yii/framework/web/CWebApplication.php(282): CController->run('admin')
+#2 /var/www/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('protocolo/defau...')
+#3 /var/www/yii/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#4 /var/www/intranet/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/index.php?r=protocolo/default/admin
+HTTP_REFERER=http://10.10.47.17/index.php?r=user/login
+---
+2013/06/12 09:38:30 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'O sistema não foi capaz de encontrar a ação "admin" solicitada.' in /var/www/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/yii/framework/web/CController.php(270): CController->missingAction('admin')
+#1 /var/www/yii/framework/web/CWebApplication.php(282): CController->run('admin')
+#2 /var/www/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('protocolo/defau...')
+#3 /var/www/yii/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#4 /var/www/intranet/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/index.php?r=protocolo/default/admin
+HTTP_REFERER=http://10.10.47.17/index.php?r=protocolo/default/protocolo&id=18
+---
+2013/06/12 09:45:06 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /var/www/intranet/protected/modules/rights/components/RController.php:62
+Stack trace:
+#0 /var/www/intranet/protected/modules/rights/components/RightsFilter.php(57): RController->accessDenied()
+#1 /var/www/yii/framework/web/filters/CFilter.php(38): RightsFilter->preFilter(Object(CFilterChain))
+#2 /var/www/intranet/protected/modules/rights/components/RController.php(36): CFilter->filter(Object(CFilterChain))
+#3 /var/www/yii/framework/web/filters/CInlineFilter.php(58): RController->filterRights(Object(CFilterChain))
+#4 /var/www/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /var/www/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/yii/framework/web/CWebApplication.php(282): CController->run('')
+#8 /var/www/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('protocolo')
+#9 /var/www/yii/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#10 /var/www/intranet/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/index.php?r=protocolo
+HTTP_REFERER=http://10.10.47.17/index.php?r=user/profile
+---
+2013/06/12 09:45:11 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /var/www/intranet/protected/modules/rights/components/RController.php:62
+Stack trace:
+#0 /var/www/intranet/protected/modules/rights/components/RightsFilter.php(57): RController->accessDenied()
+#1 /var/www/yii/framework/web/filters/CFilter.php(38): RightsFilter->preFilter(Object(CFilterChain))
+#2 /var/www/intranet/protected/modules/rights/components/RController.php(36): CFilter->filter(Object(CFilterChain))
+#3 /var/www/yii/framework/web/filters/CInlineFilter.php(58): RController->filterRights(Object(CFilterChain))
+#4 /var/www/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /var/www/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/yii/framework/web/CWebApplication.php(282): CController->run('')
+#8 /var/www/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('protocolo')
+#9 /var/www/yii/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#10 /var/www/intranet/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/index.php?r=protocolo
+HTTP_REFERER=http://10.10.47.17/index.php?r=user/profile
+---
+2013/06/12 09:45:59 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /var/www/intranet/protected/modules/rights/components/RController.php:62
+Stack trace:
+#0 /var/www/intranet/protected/modules/rights/components/RightsFilter.php(57): RController->accessDenied()
+#1 /var/www/yii/framework/web/filters/CFilter.php(38): RightsFilter->preFilter(Object(CFilterChain))
+#2 /var/www/intranet/protected/modules/rights/components/RController.php(36): CFilter->filter(Object(CFilterChain))
+#3 /var/www/yii/framework/web/filters/CInlineFilter.php(58): RController->filterRights(Object(CFilterChain))
+#4 /var/www/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /var/www/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/yii/framework/web/CWebApplication.php(282): CController->run('')
+#8 /var/www/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('protocolo')
+#9 /var/www/yii/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#10 /var/www/intranet/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/index.php?r=protocolo
+HTTP_REFERER=http://10.10.47.17/index.php?r=user/profile
+---
+2013/06/12 09:46:21 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /var/www/intranet/protected/modules/rights/components/RController.php:62
+Stack trace:
+#0 /var/www/intranet/protected/modules/rights/components/RightsFilter.php(57): RController->accessDenied()
+#1 /var/www/yii/framework/web/filters/CFilter.php(38): RightsFilter->preFilter(Object(CFilterChain))
+#2 /var/www/intranet/protected/modules/rights/components/RController.php(36): CFilter->filter(Object(CFilterChain))
+#3 /var/www/yii/framework/web/filters/CInlineFilter.php(58): RController->filterRights(Object(CFilterChain))
+#4 /var/www/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /var/www/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/yii/framework/web/CWebApplication.php(282): CController->run('')
+#8 /var/www/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('protocolo')
+#9 /var/www/yii/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#10 /var/www/intranet/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/index.php?r=protocolo
+HTTP_REFERER=http://10.10.47.17/index.php?r=user/profile
+---
+2013/06/12 09:47:28 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'O sistema não foi capaz de encontrar a ação "update" solicitada.' in /var/www/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/yii/framework/web/CController.php(270): CController->missingAction('update')
+#1 /var/www/yii/framework/web/CWebApplication.php(282): CController->run('update')
+#2 /var/www/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('protocolo/defau...')
+#3 /var/www/yii/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#4 /var/www/intranet/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/index.php?r=protocolo/default/update&id=19
+HTTP_REFERER=http://10.10.47.17/index.php?r=protocolo
+---
+2013/06/12 09:48:26 [error] [exception.CException] exception 'CException' with message 'DefaultController não pôde encontrar a visualização "print" solicitada.' in /var/www/yii/framework/web/CController.php:878
+Stack trace:
+#0 /var/www/yii/framework/web/CController.php(782): CController->renderPartial('print', Array, true)
+#1 /var/www/intranet/protected/modules/protocolo/controllers/DefaultController.php(245): CController->render('print', Array)
+#2 [internal function]: DefaultController->actionImprimir('19')
+#3 /var/www/yii/framework/web/actions/CAction.php(108): ReflectionMethod->invokeArgs(Object(DefaultController), Array)
+#4 /var/www/yii/framework/web/actions/CInlineAction.php(47): CAction->runWithParamsInternal(Object(DefaultController), Object(ReflectionMethod), Array)
+#5 /var/www/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#6 /var/www/yii/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#7 /var/www/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#8 /var/www/intranet/protected/modules/rights/components/RController.php(36): CFilter->filter(Object(CFilterChain))
+#9 /var/www/yii/framework/web/filters/CInlineFilter.php(58): RController->filterRights(Object(CFilterChain))
+#10 /var/www/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#11 /var/www/yii/framework/web/CController.php(291): CFilterChain->run()
+#12 /var/www/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#13 /var/www/yii/framework/web/CWebApplication.php(282): CController->run('imprimir')
+#14 /var/www/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('protocolo/defau...')
+#15 /var/www/yii/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#16 /var/www/intranet/index.php(13): CApplication->run()
+#17 {main}
+REQUEST_URI=/index.php?r=protocolo/default/imprimir&id=19
+HTTP_REFERER=http://10.10.47.17/index.php?r=protocolo
+---
+2013/06/12 09:51:51 [error] [exception.CException] exception 'CException' with message 'DefaultController não pôde encontrar a visualização "move" solicitada.' in /var/www/yii/framework/web/CController.php:878
+Stack trace:
+#0 /var/www/intranet/protected/modules/protocolo/views/default/destinar.php(16): CController->renderPartial('move', Array)
+#1 /var/www/yii/framework/web/CBaseController.php(126): require('/var/www/intran...')
+#2 /var/www/yii/framework/web/CBaseController.php(95): CBaseController->renderInternal('/var/www/intran...', Array, true)
+#3 /var/www/yii/framework/web/CController.php(869): CBaseController->renderFile('/var/www/intran...', Array, true)
+#4 /var/www/yii/framework/web/CController.php(782): CController->renderPartial('destinar', Array, true)
+#5 /var/www/intranet/protected/modules/protocolo/controllers/DefaultController.php(158): CController->render('destinar', Array)
+#6 [internal function]: DefaultController->actionDestinar('19')
+#7 /var/www/yii/framework/web/actions/CAction.php(108): ReflectionMethod->invokeArgs(Object(DefaultController), Array)
+#8 /var/www/yii/framework/web/actions/CInlineAction.php(47): CAction->runWithParamsInternal(Object(DefaultController), Object(ReflectionMethod), Array)
+#9 /var/www/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#10 /var/www/yii/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#11 /var/www/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#12 /var/www/intranet/protected/modules/rights/components/RController.php(36): CFilter->filter(Object(CFilterChain))
+#13 /var/www/yii/framework/web/filters/CInlineFilter.php(58): RController->filterRights(Object(CFilterChain))
+#14 /var/www/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#15 /var/www/yii/framework/web/CController.php(291): CFilterChain->run()
+#16 /var/www/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /var/www/yii/framework/web/CWebApplication.php(282): CController->run('destinar')
+#18 /var/www/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('protocolo/defau...')
+#19 /var/www/yii/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#20 /var/www/intranet/index.php(13): CApplication->run()
+#21 {main}
+REQUEST_URI=/index.php?r=protocolo/default/destinar&id=19
+HTTP_REFERER=http://10.10.47.17/index.php?r=protocolo
+---
+2013/06/12 09:55:31 [error] [exception.CException] exception 'CException' with message 'DefaultController não pôde encontrar a visualização "move" solicitada.' in /var/www/yii/framework/web/CController.php:878
+Stack trace:
+#0 /var/www/intranet/protected/modules/protocolo/views/default/destinar.php(16): CController->renderPartial('move', Array)
+#1 /var/www/yii/framework/web/CBaseController.php(126): require('/var/www/intran...')
+#2 /var/www/yii/framework/web/CBaseController.php(95): CBaseController->renderInternal('/var/www/intran...', Array, true)
+#3 /var/www/yii/framework/web/CController.php(869): CBaseController->renderFile('/var/www/intran...', Array, true)
+#4 /var/www/yii/framework/web/CController.php(782): CController->renderPartial('destinar', Array, true)
+#5 /var/www/intranet/protected/modules/protocolo/controllers/DefaultController.php(158): CController->render('destinar', Array)
+#6 [internal function]: DefaultController->actionDestinar('19')
+#7 /var/www/yii/framework/web/actions/CAction.php(108): ReflectionMethod->invokeArgs(Object(DefaultController), Array)
+#8 /var/www/yii/framework/web/actions/CInlineAction.php(47): CAction->runWithParamsInternal(Object(DefaultController), Object(ReflectionMethod), Array)
+#9 /var/www/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#10 /var/www/yii/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#11 /var/www/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#12 /var/www/intranet/protected/modules/rights/components/RController.php(36): CFilter->filter(Object(CFilterChain))
+#13 /var/www/yii/framework/web/filters/CInlineFilter.php(58): RController->filterRights(Object(CFilterChain))
+#14 /var/www/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#15 /var/www/yii/framework/web/CController.php(291): CFilterChain->run()
+#16 /var/www/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /var/www/yii/framework/web/CWebApplication.php(282): CController->run('destinar')
+#18 /var/www/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('protocolo/defau...')
+#19 /var/www/yii/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#20 /var/www/intranet/index.php(13): CApplication->run()
+#21 {main}
+REQUEST_URI=/index.php?r=protocolo/default/destinar&id=19
+HTTP_REFERER=http://10.10.47.17/index.php?r=protocolo
+---
+2013/06/12 10:00:00 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /var/www/intranet/protected/modules/rights/components/RController.php:62
+Stack trace:
+#0 /var/www/intranet/protected/modules/rights/components/RightsFilter.php(57): RController->accessDenied()
+#1 /var/www/yii/framework/web/filters/CFilter.php(38): RightsFilter->preFilter(Object(CFilterChain))
+#2 /var/www/intranet/protected/modules/rights/components/RController.php(36): CFilter->filter(Object(CFilterChain))
+#3 /var/www/yii/framework/web/filters/CInlineFilter.php(58): RController->filterRights(Object(CFilterChain))
+#4 /var/www/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /var/www/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/yii/framework/web/CWebApplication.php(282): CController->run('protocolar')
+#8 /var/www/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('protocolo/defau...')
+#9 /var/www/yii/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#10 /var/www/intranet/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/index.php?r=protocolo/default/protocolar
+HTTP_REFERER=http://10.10.47.17/index.php?r=protocolo
+---
+2013/06/12 10:00:37 [warning] [application] Failed to set unsafe attribute "destino" of "Protocolo".
+in /var/www/intranet/protected/modules/protocolo/controllers/DefaultController.php (109)
+in /var/www/intranet/protected/modules/rights/components/RController.php (36)
+in /var/www/intranet/index.php (13)
+2013/06/12 10:02:16 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /var/www/intranet/protected/modules/rights/components/RController.php:62
+Stack trace:
+#0 /var/www/intranet/protected/modules/rights/components/RightsFilter.php(57): RController->accessDenied()
+#1 /var/www/yii/framework/web/filters/CFilter.php(38): RightsFilter->preFilter(Object(CFilterChain))
+#2 /var/www/intranet/protected/modules/rights/components/RController.php(36): CFilter->filter(Object(CFilterChain))
+#3 /var/www/yii/framework/web/filters/CInlineFilter.php(58): RController->filterRights(Object(CFilterChain))
+#4 /var/www/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /var/www/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/yii/framework/web/CWebApplication.php(282): CController->run('arquivar')
+#8 /var/www/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('protocolo/defau...')
+#9 /var/www/yii/framework/base/CApplication.php(169): CWebApplication->processRequest()
+#10 /var/www/intranet/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/index.php?r=protocolo/default/arquivar&id=19
+HTTP_REFERER=http://10.10.47.17/index.php?r=protocolo/default/inbox
+---
