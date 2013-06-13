@@ -20,7 +20,7 @@ class DefaultController extends RController
 
 	public function actionIndex()
 	{
-		if(Yii::app()->user->checkAccess('Tramitador'))
+		if(Yii::app()->user->checkAccess('Recebedor'))
 		{
 			$this->redirect(array('inbox'));
 		}

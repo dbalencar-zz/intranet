@@ -2,7 +2,7 @@
 /* @var $this ProtocoloController */
 /* @var $model Protocolo */
 
-if (Yii::app()->user->checkAccess('Tramitador'))
+if (Yii::app()->user->checkAccess('Recebedor'))
 {
 	$this->breadcrumbs=array(
 		'Protocolo'=>array('/protocolo'),
