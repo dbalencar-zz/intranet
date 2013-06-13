@@ -6,12 +6,12 @@ if (Yii::app()->user->checkAccess('Tramitador'))
 {
 	$this->breadcrumbs=array(
 		'Protocolo'=>array('/protocolo'),
-		$model->id,
+		$model->protocolo,
 	);
 } else {
 	$this->breadcrumbs=array(
 		'Protocolo'=>array('/protocolo/default/pesquisar'),
-		$model->id,
+		$model->protocolo,
 	);
 }
 
@@ -21,7 +21,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>Protocolo #<?php echo $model->id; ?></h1>
+<h1>Protocolo <?php echo $model->protocolo; ?></h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,

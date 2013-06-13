@@ -110,4 +110,9 @@ class Unidade extends CActiveRecord
 		$criteria->compare('id','<>'.$origem);
 		return CHtml::listData($this->findAll($criteria),'id','nome');
 	}
+	
+	public function getNovoProtocolo()
+	{
+		return date("y",time()).'.'.sprintf('%03d', $this->id).'.'.sprintf('%07d', $this->protocolo+1);
+	}
 }

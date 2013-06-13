@@ -11,8 +11,8 @@
 <center>
 <table width="900" >
 	<tr>
-		<td colspan="4" style="text-align: center; font-size:x-large; font-weight: bold;">PROTOCOLO #</td>
-		<td style="text-align: center; font-size: medium; font-weight: bold;"><?php echo $model->protocolo_id; ?></td>
+		<td colspan="4" style="text-align: center; font-size:x-large; font-weight: bold;">PROTOCOLO</td>
+		<td style="text-align: center; font-size: medium; font-weight: bold;"><?php echo $model->pr->protocolo; ?></td>
 		<td style="text-align: center; font-size: large; font-weight: bold;">Tramitado em <?php echo $data = Yii::app()->dateFormatter->formatDateTime($model->or_datahora,'medium','medium'); ?></td>
 	</tr>
 </table>

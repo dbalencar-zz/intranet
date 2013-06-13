@@ -1,6 +1,6 @@
 <?php
 
-class DefaultController extends RController
+class UnidadeController extends RController
 {
 	public $layout='//layouts/column2';
 	
@@ -15,12 +15,11 @@ class DefaultController extends RController
 	
 	public function allowedActions()
 	{
-		return 'index, suggestedTags';
+		return 'index, protocolo, suggestedTags';
 	}
 	
 	public function actionIndex()
 	{	
-		//$data=$this->getData(Unidade::model()->findByPk('1'));
 		$criteria=new CDbCriteria();
 		$criteria->addCondition('pai IS NULL');
 		$data=$this->getDatas(Unidade::model()->findAll($criteria));
@@ -30,7 +29,6 @@ class DefaultController extends RController
 				'hasChildren'=>'1',
 				'children'=>$data,
 		);
-		//print_r($unidades); die;
         $this->render('index',array('data'=>array($unidades)));
 	}
 	

@@ -34,7 +34,7 @@ class Tramitacao extends CActiveRecord
 			array('despacho', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('protocolo_id, origem, or_usuario, or_datahora, destino, despacho', 'safe', 'on'=>'search'),
+			array('pr.protocolo, origem, or_usuario, or_datahora, destino, despacho', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -97,7 +97,7 @@ class Tramitacao extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('protocolo_id',$this->protocolo_id,true);
+		$criteria->compare('pr.protocolo',$this->protocolo,true);
 		$criteria->compare('origem',$this->origem);
 		$criteria->compare('or_usuario',$this->or_usuario);
 		$criteria->compare('or_datahora',$this->or_datahora,true);

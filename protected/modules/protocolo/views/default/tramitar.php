@@ -12,7 +12,7 @@ if (!CHtml::submitButton($model->isNewRecord)) {
 }
 ?>
 
-<h1>Tramitar Protocolo #<?php echo $model->protocolo_id; ?></h1>
+<h1>Tramitar Protocolo <?php echo $model->pr->protocolo; ?></h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model->pr,

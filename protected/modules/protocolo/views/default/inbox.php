@@ -26,7 +26,7 @@ $this->menu=array(
 	'id'=>'pendentes-grid',
 	'dataProvider'=>$pendentesProvider,
 	'columns'=>array(
-		'protocolo_id',
+		'pr.protocolo',
 		'or.sigla',
 		'or_datahora',
 		'de.sigla',
@@ -50,7 +50,7 @@ $this->menu=array(
 					'label'=>'Tramitar',
 					'imageUrl'=>Yii::app()->request->baseUrl.'/images/tramitar.png',
 					'url'=>'Yii::app()->createUrl("/protocolo/default/tramitar", array("id"=>$data->protocolo_id))',
-					'visible'=>'isset($data->de_datahora)',
+					'visible'=>'isset($data->de_datahora) && Yii::app()->user->checkAccess("Tramitador")',
 				),
 				'arquivar'=>array(
 					'label'=>'Arquivar',

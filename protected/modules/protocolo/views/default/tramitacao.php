@@ -6,13 +6,13 @@ if (Yii::app()->user->checkAccess('Authenticated'))
 {
 	$this->breadcrumbs=array(
 		'Protocolo'=>array('/protocolo'),
-		$model->protocolo_id=>array('/protocolo/default/protocolo', 'id'=>$model->protocolo_id),
+		$model->pr->protocolo=>array('/protocolo/default/protocolo', 'id'=>$model->protocolo_id),
 		'Tramitação',
 	);
 } else {
 	$this->breadcrumbs=array(
 		'Protocolo'=>array('/protocolo/default/pesquisar'),
-		$model->protocolo_id=>array('/protocolo/default/protocolo', 'id'=>$model->protocolo_id),
+		$model->pr->protocolo=>array('/protocolo/default/protocolo', 'id'=>$model->protocolo_id),
 		'Tramitação',
 	);
 }
@@ -23,7 +23,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>Protocolo #<?php echo $model->protocolo_id; ?></h1>
+<h1>Protocolo <?php echo $model->pr->protocolo; ?></h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model->pr,

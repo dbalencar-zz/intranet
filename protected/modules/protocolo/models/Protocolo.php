@@ -36,7 +36,7 @@ class Protocolo extends CActiveRecord
 			array('usuario', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, documento, assunto, origem, arquivado', 'safe', 'on'=>'search'),
+			array('protocolo, documento, assunto, origem, arquivado', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -87,7 +87,7 @@ class Protocolo extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id,false);
+		$criteria->compare('protocolo',$this->protocolo,true);
 		$criteria->compare('documento',$this->documento,true);
 		$criteria->compare('assunto',$this->assunto,true);
 		$criteria->compare('origem',$this->origem,true);
@@ -114,8 +114,12 @@ class Protocolo extends CActiveRecord
 	{
 		if ($this->isNewRecord)
 		{
+			$unidade=Unidade::model()->findByPk(Yii::app()->getModule('user')->user()->profile->unidade_id);
+			$this->protocolo=$unidade->novoProtocolo;
 			$this->usuario=Yii::app()->getModule('user')->user()->id;
 			$this->datahora=new CDbExpression('NOW()');
+			$unidade->protocolo+=1;
+			$unidade->save();
 		}
 		
 		return parent::beforeSave();

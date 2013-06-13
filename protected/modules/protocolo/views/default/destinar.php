@@ -3,8 +3,8 @@
 /* @var $model Protocolo */
 
 $this->breadcrumbs=array(
-	'Protocolo'=>array('admin'),
-	$model->protocolo_id=>array('protocolo','id'=>$model->protocolo_id),
+	'Protocolo'=>array('inbox'),
+	$model->pr->protocolo=>array('protocolo','id'=>$model->protocolo_id),
 	'Editar',
 );
 
@@ -20,14 +20,14 @@ $this->menu=array(
 
 if (!CHtml::submitButton($model->isNewRecord)) {
 	$this->breadcrumbs=array(
-		'Protocolo'=>array('admin'),
+		'Protocolo'=>array('inbox'),
 		$model->protocolo_id=>array('view', 'id'=>$model->protocolo_id),
 		'Tramitar',
 	);
 }
 ?>
 
-<h1>Tramitar Protocolo #<?php echo $model->protocolo_id; ?></h1>
+<h1>Tramitar Protocolo <?php echo $model->pr->protocolo; ?></h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model->pr,

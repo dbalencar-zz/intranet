@@ -16,6 +16,13 @@ $this->menu=array(
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
+		array(
+			'name'=>'id',
+			'type'=>'raw',
+			'value'=>sprintf('%04d', $model->id),
+		),
+		'sigla',
 		'nome',
+		'novoprotocolo',
 	),
 )); ?>

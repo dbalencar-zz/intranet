@@ -43,8 +43,8 @@ $('.search-form form').submit(function(){
 )); ?>
 
 	<div class="row">
-		<?php echo $form->label($model,'id'); ?>
-		<?php echo $form->textField($model,'id',array('size'=>10,'maxlength'=>10)); ?>
+		<?php echo $form->label($model,'protocolo'); ?>
+		<?php echo $form->textField($model,'protocolo',array('size'=>14,'maxlength'=>14)); ?>
 	</div>
 	
 	<div class="row">
@@ -78,7 +78,7 @@ $('.search-form form').submit(function(){
 	'id'=>'protocolo-grid',
 	'dataProvider'=>$model->search(),
 	'columns'=>array(
-		'id',
+		'protocolo',
 		'documento',
 		'assunto',
 		'origem',

@@ -26,8 +26,6 @@ return array(
 		'application.modules.rights.*',
 		'application.modules.rights.models.*',
 		'application.modules.rights.components.*',
-		'application.modules.unidade.models.*',
-		'application.modules.unidade.components.*',
 		'application.modules.protocolo.models.*',
 		'application.modules.protocolo.components.*',
 	),
@@ -81,7 +79,6 @@ return array(
 		'rights'=>array(
 			//'install'=>true,
 		),
-		'unidade',
 		'protocolo'=>array(
 			'defaultController' => 'default',
 		),
