@@ -36,6 +36,12 @@
 		<?php echo $form->textField($model,'nome'); ?>
 		<?php echo $form->error($model,'nome'); ?>
 	</div>
+	
+	<div class="row">
+		<?php echo $form->labelEx($model,'protocolo'); ?>
+		<?php echo $form->textField($model,'protocolo'); ?>
+		<?php echo $form->error($model,'protocolo'); ?>
+	</div>
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton('Salvar'); ?>

@@ -27,8 +27,8 @@ class Unidade extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('sigla, nome', 'required'),
-			array('pai', 'numerical', 'integerOnly'=>true),
+			array('sigla, nome, protocolo', 'required'),
+			array('pai, protocolo', 'numerical', 'integerOnly'=>true),
 			array('sigla', 'length', 'max'=>10),
 			array('nome', 'length', 'max'=>50),
 			// The following rule is used by search().

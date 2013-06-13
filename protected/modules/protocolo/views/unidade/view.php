@@ -19,9 +19,10 @@ $this->menu=array(
 		array(
 			'name'=>'id',
 			'type'=>'raw',
-			'value'=>sprintf('%04d', $model->id),
+			'value'=>sprintf('%03d', $model->id),
 		),
 		'sigla',
 		'nome',
+		'protocolo',
 	),
 )); ?>
