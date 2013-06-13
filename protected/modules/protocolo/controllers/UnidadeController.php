@@ -15,7 +15,7 @@ class UnidadeController extends RController
 	
 	public function allowedActions()
 	{
-		return 'index, protocolo, suggestedTags';
+		return 'suggestedTags';
 	}
 	
 	public function actionIndex()

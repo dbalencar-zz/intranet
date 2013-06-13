@@ -2,7 +2,7 @@
 /* @var $this ProtocoloController */
 /* @var $model Protocolo */
 
-if (Yii::app()->user->checkAccess('Authenticated'))
+if (Yii::app()->user->checkAccess('Tramitador'))
 {
 	$this->breadcrumbs=array(
 		'Protocolo'=>array('/protocolo'),

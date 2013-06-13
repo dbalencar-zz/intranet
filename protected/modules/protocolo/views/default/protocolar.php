@@ -3,7 +3,7 @@
 /* @var $model Protocolo */
 
 $this->breadcrumbs=array(
-	'Protocolo'=>array('pendentes'),
+	'Protocolo'=>array('inbox'),
 	'Protocolar',
 );
 ?>

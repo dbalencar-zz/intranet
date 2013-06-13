@@ -3,13 +3,11 @@
 /* @var $model Tramitacao */
 /* @var $form CActiveForm */
 
-if (!CHtml::submitButton($model->isNewRecord)) {
-	$this->breadcrumbs=array(
-		'Protocolo'=>array('admin'),
-		$model->protocolo_id=>array('view', 'id'=>$model->protocolo_id),
-		'Tramitar',
-	);
-}
+$this->breadcrumbs=array(
+	'Protocolo'=>array('inbox'),
+	$model->pr->protocolo=>array('protocolo', 'id'=>$model->protocolo_id),
+	'Tramitar',
+);
 ?>
 
 <h1>Tramitar Protocolo <?php echo $model->pr->protocolo; ?></h1>

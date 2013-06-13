@@ -10,7 +10,7 @@ if (Yii::app()->user->checkAccess('Tramitador'))
 	);
 } else {
 	$this->breadcrumbs=array(
-			'Protocolo',
+		'Protocolo',
 	);
 }
 

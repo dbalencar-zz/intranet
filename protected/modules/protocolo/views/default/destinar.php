@@ -13,20 +13,6 @@ $this->menu=array(
 );
 ?>
 
-<?php
-/* @var $this TramitacaoController */
-/* @var $model Tramitacao */
-/* @var $form CActiveForm */
-
-if (!CHtml::submitButton($model->isNewRecord)) {
-	$this->breadcrumbs=array(
-		'Protocolo'=>array('inbox'),
-		$model->protocolo_id=>array('view', 'id'=>$model->protocolo_id),
-		'Tramitar',
-	);
-}
-?>
-
 <h1>Tramitar Protocolo <?php echo $model->pr->protocolo; ?></h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(

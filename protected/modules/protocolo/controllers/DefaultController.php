@@ -2,7 +2,7 @@
 
 class DefaultController extends RController
 {
-	public $defaultAction='inbox';
+	public $defaultAction='index';
 
 	public $layout='//layouts/column2';
 
@@ -15,9 +15,21 @@ class DefaultController extends RController
 	
 	public function allowedActions()
 	{
-		return 'pesquisar, protocolo, tramitacao, suggestedTags';
+		return 'index, pesquisar, protocolo, tramitacao, suggestedTags';
 	}
 
+	public function actionIndex()
+	{
+		if(Yii::app()->user->checkAccess('Tramitador'))
+		{
+			$this->redirect(array('inbox'));
+		}
+		else
+		{
+			$this->redirect(array('pesquisar'));
+		}
+	}
+	
 	public function actionInbox()
 	{
 		

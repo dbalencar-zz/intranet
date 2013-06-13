@@ -23,6 +23,5 @@ $this->menu=array(
 		),
 		'sigla',
 		'nome',
-		'novoprotocolo',
 	),
 )); ?>
