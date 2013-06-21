@@ -5,7 +5,7 @@
 $this->breadcrumbs=array(
 	'Protocolo'=>array('inbox'),
 	$model->pr->protocolo=>array('protocolo','id'=>$model->protocolo_id),
-	'Editar',
+	'Tramitar',
 );
 
 $this->menu=array(
@@ -13,7 +13,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>Tramitar Protocolo <?php echo $model->pr->protocolo; ?></h1>
+<h1>Detalhes</h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model->pr,

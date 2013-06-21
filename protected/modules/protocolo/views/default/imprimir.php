@@ -18,10 +18,10 @@
 </table>
 <table width="900">
 	<tr>
-		<th colspan="5">INFORMAÇÕES</th>
+		<th colspan="2">INFORMAÇÕES</th>
 	</tr>
 	<tr>
-		<td align="right">Documento:</td><td><?php echo $model->pr->documento; ?></td>
+		<td align="right" width="30%">Documento:</td><td><?php echo $model->pr->documento; ?></td>
 	</tr>
 	<tr>
 		<td align="right">Assunto:</td><td><?php echo $model->pr->assunto; ?></td>
@@ -39,6 +39,28 @@
 		<td align="right">Observação:</td><td><?php echo $model->pr->observacao; ?></td>
 	</tr>
 </table>
+
+<?php if ($vinculos) { ?>
+
+<table width="900">
+<tr>
+	<th colspan="3">ADENDOS</th>
+</tr>
+
+<?php foreach($vinculos as $n=>$vinculo) { ?>
+
+<tr>
+	<td align="center" width="10%"><?php echo $n+1; ?></td>
+	<td align="center" width="20%"><?php echo $vinculo->vin->protocolo; ?></td>
+	<td><?php echo $vinculo->vin->documento.': '.$vinculo->vin->assunto.' ('.$vinculo->vin->origem.')'; ?></td>
+</tr>
+
+<?php } ?>
+
+</table>
+
+<?php } ?>
+
 <table width="900">
 	<tr>
 		<td colspan="2">DESPACHO (<?php echo $model->usuarioOrigemText; ?>): <p><?php echo $model->despacho; ?></p></td>

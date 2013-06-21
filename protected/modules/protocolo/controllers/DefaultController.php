@@ -185,14 +185,20 @@ class DefaultController extends RController
 	{
 		$protocolo=$this->loadProtocolo($id);
 	
-		$criteria=new CDbCriteria();
-		$criteria->compare('protocolo_id',$id);
-		$criteria->order='or_datahora desc';
-		$dataProvider=new CActiveDataProvider('Tramitacao', array('criteria'=>$criteria));
+		$tramitacoes=new CDbCriteria();
+		$tramitacoes->compare('protocolo_id',$id);
+		$tramitacoes->order='or_datahora desc';
+		$tramitacoesProvider=new CActiveDataProvider('Tramitacao', array('criteria'=>$tramitacoes));
+		
+		$vinculos=new CDbCriteria();
+		$vinculos->compare('protocolo', $protocolo->id);
+		$vinculos->addCondition('desvinculado is NULL');
+		$vinculosProvider=new CActiveDataProvider('Vinculo', array('criteria'=>$vinculos));
 	
 		$this->render('protocolo',array(
 				'model'=>$protocolo,
-				'dataProvider'=>$dataProvider,
+				'vinculosProvider'=>$vinculosProvider,
+				'tramitacoesProvider'=>$tramitacoesProvider,
 		));
 	}
 	
@@ -227,6 +233,14 @@ class DefaultController extends RController
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
 	}
+	
+	public function loadVinculo($id)
+	{
+		$model=Vinculo::model()->findByPk($id);
+		if($model===null)
+			throw new CHttpException(404,'The requested page does not exist.');
+		return $model;
+	}
 
 	/**
 	 * Performs the AJAX validation.
@@ -243,9 +257,103 @@ class DefaultController extends RController
 	
 	public function actionImprimir($id)
 	{
+		$tramitacao=$this->loadTramitacao($id);
+		
+		$criteria=new CDbCriteria();
+		$criteria->compare('t.protocolo', $tramitacao->protocolo_id);
+		$criteria->addCondition('desvinculado is NULL');
+		
+		$vinculos=Vinculo::model()->with('vin')->findAll($criteria);
+		
 		$this->layout='protocolo';
 		$this->render('imprimir',array(
-				'model'=>$this->loadTramitacao($id),
+			'model'=>$tramitacao,
+			'vinculos'=>$vinculos,
 		));
+	}
+	
+	public function actionPesquisarPrincipal()
+	{
+		
+	}
+	
+	public function actionVincular()
+	{		
+		$model = new Vinculo();
+		$this->performAjaxValidationVinculo($model);
+		
+		if(Yii::app()->request->isAjaxRequest)
+		{
+			if(isset($_POST['Vinculo']))
+			{
+				$model->attributes=$_POST['Vinculo'];
+				
+				if(($model->vinculo===''))
+					exit(json_encode(array('status'=>'fail','error'=>'<li>Protocolo deve ser preenchido!</li>')));
+				
+				$protocolo=Protocolo::model()->findByAttributes(array('protocolo'=>$model->vinculo));
+				
+				if(is_null($protocolo))
+					exit(json_encode(array('status'=>'fail','error'=>'<li>Protocolo não encontrado!</li>')));
+
+				if($model->protocolo===$protocolo->id)
+					exit(json_encode(array('status'=>'fail','error'=>'<li>Protocolo não pode ser apensado a ele mesmo!</li>')));
+
+				$criteria=new CDbCriteria();
+				$criteria->compare('vinculo', $protocolo->id);
+				$criteria->compare('protocolo', $model->protocolo);
+				$criteria->addCondition('desvinculado is NULL');
+				
+				if(!is_null(Vinculo::model()->find($criteria)))
+					exit(json_encode(array('status'=>'fail','error'=>'<li>Protocolo já apensado a este Protocolo!</li>')));
+				
+				$criteria=new CDbCriteria();
+				$criteria->compare('vinculo', $protocolo->id);
+				$criteria->addCondition('desvinculado is NULL');
+				$vinculo=Vinculo::model()->find($criteria);
+				if(!is_null($vinculo))
+					exit(json_encode(array('status'=>'fail','error'=>'<li>Protocolo já apensado a outro Protocolo ('.$vinculo->pro->protocolo.')!</li>')));			
+					
+				$model->vinculo=$protocolo->id;
+				$model->vinculado=new CDbExpression('NOW()');
+				$model->vin_usuario=Yii::app()->getModule('user')->user()->id;
+				
+				if ($model->save())
+				{
+					exit(json_encode(array('status'=>'success')));
+				}
+				else
+				{
+					exit(json_encode(array('status'=>'fail','error'=>CHtml::errorSummary($model))));
+				}
+			} 
+		}
+	}
+	
+	protected function performAjaxValidationVinculo($model)
+	{
+		if(isset($_POST['ajax']) && $_POST['ajax']==='vinculo-form')
+		{
+			echo CActiveForm::validate($model,array('vinculo'));
+			Yii::app()->end();
+		}
+	}
+	
+	public function actionDesvincular($id)
+	{
+		if(Yii::app()->request->isPostRequest)
+		{
+			// we only allow deletion via POST request
+			$model=$this->loadVinculo($id);
+			$model->des_usuario=Yii::app()->getModule('user')->user()->id;
+			$model->desvinculado=new CDbExpression('NOW()');
+			$model->save();
+			
+			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+			if(!isset($_GET['ajax']))
+				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+		}
+		else
+			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 }

@@ -70,6 +70,7 @@ return array(
 	
 			'relations' => array(
 				'protocolo'=>array(CActiveRecord::HAS_MANY, 'Protocolo', 'usuario'),
+				'vinculo'=>array(CActiveRecord::HAS_MANY, 'Vinculo', 'vin_usuario'),
 			),
 				
 			'profileRelations' => array(						

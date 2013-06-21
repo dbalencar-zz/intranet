@@ -23,24 +23,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>Protocolo <?php echo $model->pr->protocolo; ?></h1>
-
-<?php $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model->pr,
-	'attributes'=>array(
-		'documento',
-		'assunto',
-		'origem',
-		'datahora',
-		'usuarioText',
-		'observacao',
-		'arquivadoText',
-	),
-)); ?>
-
-<br/>
-
-<h1 style="float: left;">Tramitação Detalhada</h1>
+<h1>Detalhes</h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
