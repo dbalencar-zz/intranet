@@ -35,16 +35,18 @@
 	<tr>
 		<td align="right">Protocolista:</td><td><?php echo $model->pr->usuarioText; ?></td>
 	</tr>
+	<?php if($model->pr->observacao) { ?>
 	<tr>
 		<td align="right">Observação:</td><td><?php echo $model->pr->observacao; ?></td>
 	</tr>
+	<?php } ?>
 </table>
 
 <?php if ($vinculos) { ?>
 
 <table width="900">
 <tr>
-	<th colspan="3">ADENDOS</th>
+	<th colspan="3">APENSOS</th>
 </tr>
 
 <?php foreach($vinculos as $n=>$vinculo) { ?>
@@ -62,9 +64,11 @@
 <?php } ?>
 
 <table width="900">
+	<?php if ($model->despacho) { ?>
 	<tr>
 		<td colspan="2">DESPACHO (<?php echo $model->usuarioOrigemText; ?>): <p><?php echo $model->despacho; ?></p></td>
 	</tr>
+	<?php } ?>
 	<tr style="min-height: 300px;">
 		<td style="width: 50%;">Recebido por <br/><br/><br/></td>
 		<td>Data: _____/_____/__________ Horário _____:_____ h.</td>

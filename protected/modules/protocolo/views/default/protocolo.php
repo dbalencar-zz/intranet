@@ -70,7 +70,7 @@ function summary(data)
 }
 </script>
 
-<h2>Adendos</h2>
+<h2>Apensos</h2>
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'vinculo-grid',
 	'dataProvider'=>$vinculosProvider,
