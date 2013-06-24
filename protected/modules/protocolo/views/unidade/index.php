@@ -2,7 +2,7 @@
 /* @var $this DefaultController */
 
 $this->breadcrumbs=array(
-	$this->module->id,
+	'Unidades',
 );
 
 $this->menu=array(
