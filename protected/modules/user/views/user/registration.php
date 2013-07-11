@@ -29,8 +29,11 @@ $this->breadcrumbs=array(
 	
 	<div class="row">
 	<?php echo $form->labelEx($model,'username'); ?>
-	<?php echo $form->textField($model,'username'); ?>
+	<?php echo $form->textField($model,'username',array('length'=>'11')); ?>
 	<?php echo $form->error($model,'username'); ?>
+	<p class="hint">
+	<?php echo "CPF: Apenas números, sem pontos ou traços."; ?>
+	</p>
 	</div>
 	
 	<div class="row">
