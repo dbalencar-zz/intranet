@@ -140,7 +140,7 @@ class UnidadeController extends RController
 			
 			$result[]=array(
 				'id'=>$unidade->id,
-				'text'=>CHtml::link($unidade->sigla, array('view', 'id'=>$unidade->id)),
+				'text'=>CHtml::link($unidade->nome, array('view', 'id'=>$unidade->id)),
 				'hasChildren'=>isset($children),
 				'children'=>$children,
 			);

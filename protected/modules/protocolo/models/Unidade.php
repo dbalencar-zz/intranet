@@ -45,7 +45,7 @@ class Unidade extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'children'=>array(self::HAS_MANY,'unidade','pai'),
+			'children'=>array(self::HAS_MANY,'unidade','pai','order'=>'nome'),
 			'pai'=>array(self::HAS_ONE,'unidade','pai'),
 			'profiles'=>array(self::HAS_MANY, 'Profile', 'unidade_id'),
 		);
