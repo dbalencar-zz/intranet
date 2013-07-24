@@ -15,7 +15,7 @@ if (Yii::app()->user->checkAccess('Recebedor'))
 }
 
 $this->menu=array(
-	array('label'=>'Protocolar', 'url'=>array('pesquisar'), 'visible'=>Yii::app()->user->checkAccess('Protocolista')),
+	array('label'=>'Protocolar', 'url'=>array('protocolar'), 'visible'=>Yii::app()->user->checkAccess('Protocolista')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
