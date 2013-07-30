@@ -39,7 +39,7 @@
 	
 	<div class="row">
 		<?php echo $form->labelEx($model,'destino'); ?>
-		<?php echo $form->dropDownList($model,'destino',Unidade::model()->listAll(Yii::app()->getModule('user')->user()->profile->unidade_id)); ?>
+		<?php echo $form->dropDownList($model,'destino',Unidade::model()->listAll(Yii::app()->getModule('user')->user()->profile->unidade_id,true)); ?>
 		<?php echo $form->error($model,'destino'); ?>
 	</div>
 	

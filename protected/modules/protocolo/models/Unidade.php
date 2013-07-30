@@ -103,12 +103,13 @@ class Unidade extends CActiveRecord
 		return parent::model($className);
 	}
 	
-	public function listAll($origem=null)
+	public function listAll($origem=null,$restrito=false)
 	{
 		$criteria=new CDbCriteria();
 		$criteria->order='nome';
-		if($origem==23) $criteria->compare('id','<>'.$origem);
-		else $criteria->compare('id',$origem);
+		if ($origem==23) $criteria->compare('id','<>'.$origem);
+		elseif ($restrito) $criteria->compare('id',$origem);
+		else $criteria->compare('id','<>'.$origem);
 		return CHtml::listData($this->findAll($criteria),'id','nome');
 	}
 	

@@ -123,6 +123,12 @@ class DefaultController extends RController
 				$tramitacao->or_datahora=$model->datahora;
 				$tramitacao->destino=$model->destino;
 				
+				if($tramitacao->origem!=23)
+				{
+					$tramitacao->de_usuario=$tramitacao->or_usuario;
+					$tramitacao->de_datahora=$tramitacao->or_datahora;
+				}
+				
 				if($tramitacao->save())
 				{
 					$transaction->commit();				
