@@ -107,7 +107,8 @@ class Unidade extends CActiveRecord
 	{
 		$criteria=new CDbCriteria();
 		$criteria->order='nome';
-		$criteria->compare('id','<>'.$origem);
+		if($origem==23) $criteria->compare('id','<>'.$origem);
+		else $criteria->compare('id',$origem);
 		return CHtml::listData($this->findAll($criteria),'id','nome');
 	}
 	
