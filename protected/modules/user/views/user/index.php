@@ -17,11 +17,20 @@ if(UserModule::isAdmin()) {
 	'dataProvider'=>$dataProvider,
 	'columns'=>array(
 		array(
-			'name' => 'username',
+			'name' => 'name',
 			'type'=>'raw',
-			'value' => 'CHtml::link(CHtml::encode($data->username),array("user/view","id"=>$data->id))',
+			'value' => 'CHtml::link(CHtml::encode($data->profile->first_name." ".$data->profile->last_name),array("user/view","id"=>$data->id))',
 		),
-		'create_at',
-		'lastvisit_at',
+		'email',
+		array(
+			'name' => 'extension',
+			'type'=>'raw',
+			'value' => 'CHtml::link(CHtml::encode($data->profile->extension),array("user/view","id"=>$data->id))',
+		),
+		array(
+			'name' => 'unidade',
+			'type'=>'raw',
+			'value' => 'CHtml::link(CHtml::encode($data->profile->unidade->sigla),array("user/view","id"=>$data->id))',
+		),
 	),
 )); ?>

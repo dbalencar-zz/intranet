@@ -128,4 +128,5 @@ return array(
 	'Not visited' => 'Não visitou',
 	'Extension' => 'Ramal',
 	'Phone' => 'Telefone',
+	'Unidade' => 'Unidade',
 );
