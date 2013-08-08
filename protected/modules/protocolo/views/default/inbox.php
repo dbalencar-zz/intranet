@@ -24,12 +24,24 @@ $this->menu=array(
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'pendentes-grid',
-	'dataProvider'=>$pendentesProvider,
+	'dataProvider'=>$model->searchPendentes(),
+	'filter'=>$model,
 	'columns'=>array(
-		'pr.protocolo',
-		'or.sigla',
+		array(
+			'name'=>'_protocolo',
+			'value'=>'$data->pr->protocolo',
+		),
+		array(
+			'name'=>'origem',
+			'value'=>'$data->or->sigla',
+			'filter'=>Unidade::model()->listAll(),
+		),
 		'or_datahora',
-		'de.sigla',
+		array(
+			'name'=>'destino',
+			'value'=>'$data->de->sigla',
+			'filter'=>Unidade::model()->listAll(),
+		),
 		'de_datahora',
 		array(
 			'class'=>'CButtonColumn',

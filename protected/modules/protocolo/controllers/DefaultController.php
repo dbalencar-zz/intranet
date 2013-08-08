@@ -31,30 +31,15 @@ class DefaultController extends RController
 	}
 	
 	public function actionInbox()
-	{
+	{	
+		$model=new Tramitacao('search');
 		
-		$lastMoves=new CDbCriteria;
-		$lastMoves->join='LEFT JOIN tramitacao t2 ON t.id < t2.id and t.protocolo_id = t2.protocolo_id';
-		$lastMoves->addCondition('t2.id is NULL');
-		
-		$arquivados=new CDbCriteria;
-		$arquivados->join='LEFT JOIN protocolo p ON t.protocolo_id = p.id';
-		$arquivados->compare('p.arquivado','<>1');
-		
-		$arquivados->mergeWith($lastMoves);
-		
-		$pendentes=new CDbCriteria;
-		$pendentes->compare('t.origem', Yii::app()->getModule('user')->user()->profile->unidade->id, false, 'AND');
-		$pendentes->addCondition('t.de_datahora is NULL');
-		$pendentes->compare('t.destino',Yii::app()->getModule('user')->user()->profile->unidade->id, false, 'OR');
-
-		$pendentes->mergeWith($arquivados);
-				
-		$pendentes->order='t.or_datahora desc';
-		$pendentesProvider=new CActiveDataProvider('Tramitacao', array('criteria'=>$pendentes));
+		$model->unsetAttributes();
+		if(isset($_GET['Tramitacao']))
+			$model->attributes=$_GET['Tramitacao'];
 		
 		$this->render('inbox', array(
-			'pendentesProvider'=>$pendentesProvider,
+			'model'=>$model,
 		));
 	}
 	

@@ -13,6 +13,8 @@
  */
 class Tramitacao extends CActiveRecord
 {
+	public $_protocolo;
+	
 	/**
 	 * @return string the associated database table name
 	 */
@@ -34,7 +36,7 @@ class Tramitacao extends CActiveRecord
 			array('despacho', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('pr.protocolo, origem, or_usuario, or_datahora, destino, despacho', 'safe', 'on'=>'search'),
+			array('_protocolo, origem, or_usuario, or_datahora, destino, despacho', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -108,6 +110,46 @@ class Tramitacao extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+	
+	public function searchPendentes()
+	{
+		$lastMoves=new CDbCriteria;
+		$lastMoves->join='LEFT JOIN tramitacao t2 ON t.id < t2.id and t.protocolo_id = t2.protocolo_id';
+		$lastMoves->addCondition('t2.id is NULL');
+	
+		$arquivados=new CDbCriteria;
+		$arquivados->join='LEFT JOIN protocolo p ON t.protocolo_id = p.id';
+		$arquivados->compare('p.arquivado','<>1');
+	
+		$arquivados->mergeWith($lastMoves);
+	
+		$pendentes=new CDbCriteria;
+		$pendentes->compare('t.origem', Yii::app()->getModule('user')->user()->profile->unidade->id, false, 'AND');
+		$pendentes->addCondition('t.de_datahora is NULL');
+		$pendentes->compare('t.destino',Yii::app()->getModule('user')->user()->profile->unidade->id, false, 'OR');
+	
+		$pendentes->mergeWith($arquivados);
+	
+		$pendentes->compare('p.protocolo',$this->_protocolo,true);
+		$pendentes->compare('t.origem',$this->origem);
+		$pendentes->compare('t.or_datahora',$this->or_datahora,true);
+		$pendentes->compare('t.destino',$this->destino);
+		$pendentes->compare('t.de_datahora',$this->de_datahora,true);
+	
+		//$pendentes->order='t.or_datahora desc, t.de_datahora desc';
+	
+		$sort = new CSort();
+		$sort->attributes = array(
+			'defaultOrder'=>'t.or_datahora desc, t.de_datahora desc',
+			'_protocolo'=>array(
+				'asc'=>'p.protocolo',
+				'desc'=>'p.protocolo desc',
+			),
+			'*',
+		);
+		
+		return new CActiveDataProvider($this, array('criteria'=>$pendentes,'sort'=>$sort));
 	}
 
 	/**
