@@ -28,8 +28,11 @@ $this->menu=array(
 	'filter'=>$model,
 	'columns'=>array(
 		array(
+			'class'=>'DataColumn',
 			'name'=>'_protocolo',
 			'value'=>'$data->pr->protocolo',
+			'evaluateHtmlOptions'=>true,
+			'htmlOptions'=>array('title'=>'"{$data->pr->documento}"'),
 		),
 		array(
 			'name'=>'origem',
