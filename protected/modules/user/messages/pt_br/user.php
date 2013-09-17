@@ -129,4 +129,6 @@ return array(
 	'Extension' => 'Ramal',
 	'Phone' => 'Telefone',
 	'Unidade' => 'Unidade',
+	'You have requested the password recovery site {site_name}' => 'Você solicitou a recuperação de senha do site {site_name}',
+	'You have requested the password recovery site {site_name}. To receive a new password, go to {activation_url}' => 'Você solicitou a recuperação de senha do site {site_name}. Para alterar sua senha, vá para {activation_url}',
 );
