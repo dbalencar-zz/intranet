@@ -24,7 +24,7 @@ $model->protocolo=$protocolo->id;
 	<?php echo $form->hiddenField($model, 'protocolo'); ?>
 	
 	<div class="row">
-		<?php echo CHtml::label('Protocolo a apensar:', 'vinculo'); ?>
+		<?php echo CHtml::activeLabelEx($model, 'vinculo'); ?>
 		<?php $this->widget('CMaskedTextField', array(
 			'model' => $model,
 			'attribute' => 'vinculo',
@@ -35,7 +35,7 @@ $model->protocolo=$protocolo->id;
 	</div>
 	
 	<div class="row buttons">
-		<?php echo CHtml::ajaxSubmitButton('Apensar',array('default/vincular'),array('success'=>'summary')); ?>
+		<?php echo CHtml::ajaxSubmitButton('Apensar',array('default/vincular'),array('success'=>'summaryVinculo')); ?>
     </div>
 
 <?php $this->endWidget(); ?>

@@ -120,7 +120,9 @@ class Tramitacao extends CActiveRecord
 	
 		$arquivados=new CDbCriteria;
 		$arquivados->join='LEFT JOIN protocolo p ON t.protocolo_id = p.id';
-		$arquivados->compare('p.arquivado','<>1');
+		$arquivados->compare('p.estado','<>1'); //Arquivado
+		$arquivados->compare('p.estado','<>3'); //Apensado
+		$arquivados->compare('p.estado','<>9'); //Cancelado
 	
 		$arquivados->mergeWith($lastMoves);
 	

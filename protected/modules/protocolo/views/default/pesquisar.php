@@ -63,8 +63,8 @@ $('.search-form form').submit(function(){
 	</div>
 	
 	<div class="row">
-		<?php echo $form->label($model,'arquivado'); ?>
-		<?php echo $form->dropDownList($model,'arquivado',$model->simNaoOptions,array('empty'=>'Todos')); ?>
+		<?php echo $form->label($model,'estado'); ?>
+		<?php echo $form->dropDownList($model,'estado',Estado::model()->estadoOptions,array('empty'=>'Todos')); ?>
 	</div>
 	
 	<div class="row buttons">

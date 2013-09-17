@@ -48,7 +48,7 @@ $this->menu=array(
 		'de_datahora',
 		array(
 			'class'=>'CButtonColumn',
-			'template'=>'{receber}{tramitar}{arquivar}{update}{imprimir}{view}',
+			'template'=>'{receber}{tramitar}{update}{imprimir}{view}',
 			'buttons'=>array(
 				'view'=>array(
 					'imageUrl'=>Yii::app()->request->baseUrl.'/images/exibir.png',
@@ -66,13 +66,6 @@ $this->menu=array(
 					'imageUrl'=>Yii::app()->request->baseUrl.'/images/tramitar.png',
 					'url'=>'Yii::app()->createUrl("/protocolo/default/tramitar", array("id"=>$data->protocolo_id))',
 					'visible'=>'isset($data->de_datahora) && Yii::app()->user->checkAccess("Tramitador")',
-				),
-				'arquivar'=>array(
-					'label'=>'Arquivar',
-					'imageUrl'=>Yii::app()->request->baseUrl.'/images/arquivar.png',
-					'url'=>'Yii::app()->createUrl("/protocolo/default/arquivar", array("id"=>$data->protocolo_id))',
-					'options'=>array('title'=>'Arquivar','onClick'=>"if(confirm('Confirma o arquivamento?'))return true;else return false"),
-					'visible'=>'isset($data->de_datahora) && Yii::app()->user->checkAccess("Arquivista")',
 				),
 				'imprimir'=>array(
 					'label'=>'Imprimir',

@@ -33,8 +33,8 @@
 	<?php echo CHtml::encode($data->observacao); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('arquivado')); ?>:</b>
-	<?php echo CHtml::encode($data->arquivadoText); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('estado')); ?>:</b>
+	<?php echo CHtml::encode($data->estadoText); ?>
 	<br />
 
 </div>

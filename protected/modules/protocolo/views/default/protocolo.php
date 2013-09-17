@@ -18,12 +18,29 @@ if (Yii::app()->user->checkAccess('Recebedor'))
 $this->menu=array(
 	array('label'=>'Pesquisar', 'url'=>array('pesquisar')),
 	array('label'=>'Protocolar', 'url'=>array('protocolar'), 'visible'=>Yii::app()->user->checkAccess('Protocolista')),
-	array('label'=>'Apensar', 'url'=>'#', 'linkOptions'=>array('onclick'=>'js:load();'), 'visible'=>Yii::app()->user->checkAccess('Protocolista')),
+	array('label'=>'Apensar', 'url'=>'#', 'linkOptions'=>array('onclick'=>'js:loadVinculo();'),
+		'visible'=>Yii::app()->user->checkAccess('Apensador') && $model->estado==Estado::NORMAL
+	),
+	array('label'=>'Arquivar', 'url'=>array('estado', 'protocolo'=>$model->id, 'estado'=>Estado::ARQUIVADO),
+		'visible'=>Yii::app()->user->checkAccess("Arquivista") && $model->estado==Estado::NORMAL
+	),
+	array('label'=>'Desarquivar', 'url'=>array('estado', 'protocolo'=>$model->id, 'estado'=>Estado::NORMAL),
+		'visible'=>Yii::app()->user->checkAccess("Arquivista") && $model->estado==Estado::ARQUIVADO
+	),
+	array('label'=>'Externar', 'url'=>array('estado', 'protocolo'=>$model->id, 'estado'=>Estado::EXTERNO),
+		'visible'=>Yii::app()->user->checkAccess("Tramitador") && $model->estado==Estado::NORMAL
+	),
+	array('label'=>'Reinternar', 'url'=>array('estado', 'protocolo'=>$model->id, 'estado'=>Estado::NORMAL),
+		'visible'=>Yii::app()->user->checkAccess("Recebedor") && $model->estado==Estado::EXTERNO
+	),		
+	array('label'=>'Cancelar', 'url'=>array('estado', 'protocolo'=>$model->id, 'estado'=>Estado::CANCELADO),
+		'visible'=>Yii::app()->user->checkAccess('Protocolista') && !isset($model->vinculo) && $model->estado==Estado::NORMAL
+	),
 );
 ?>
 
 <script>
-function load()
+function loadVinculo()
 {
 	$('.errorSummary').hide();
 	$('.errorSummary ul').html('<li></li>');
@@ -31,7 +48,7 @@ function load()
 	$("#vinculoDialog").dialog("open");
 }
 
-function summary(data)
+function summaryVinculo(data)
 {
 	var result = $.parseJSON(data);
 	
@@ -46,16 +63,32 @@ function summary(data)
 }
 </script>
 
-<?php $this->widget('zii.widgets.jui.CJuiAccordion',array(
+<?php if ($model->estado==Estado::APENSADO) {
+	 
+$this->widget('zii.widgets.jui.CJuiAccordion',array(
 	'panels'=>array(
 		'Detalhes'=>$this->renderPartial('_detalhes',array('model'=>$model),true),
-		'Apensos'=>$this->renderPartial('_apensos',array('vinculosProvider'=>$vinculosProvider),true),
-		'Tramitação'=>$this->renderPartial('_tramitacao',array('tramitacoesProvider'=>$tramitacoesProvider),true),
 	),
 	'options'=>array(
 		'animated'=>'bounceslide',
 	),
-)); ?>
+));
+
+} else {
+
+$this->widget('zii.widgets.jui.CJuiAccordion',array(
+	'panels'=>array(
+		'Detalhes'=>$this->renderPartial('_detalhes',array('model'=>$model),true),
+		'Situações'=>$this->renderPartial('_estados',array('estadosProvider'=>$estadosProvider),true),
+		'Tramitação'=>$this->renderPartial('_tramitacao',array('tramitacoesProvider'=>$tramitacoesProvider),true),
+		'Apensos'=>$this->renderPartial('_apensos',array('vinculosProvider'=>$vinculosProvider),true),
+	),
+	'options'=>array(
+		'animated'=>'bounceslide',
+	),
+));
+
+} ?>
 
 <?php $this->beginWidget('zii.widgets.jui.CJuiDialog',array(
     'id'=>'vinculoDialog',

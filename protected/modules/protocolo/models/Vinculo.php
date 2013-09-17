@@ -62,7 +62,7 @@ class Vinculo extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'protocolo' => 'Protocolo',
-			'vinculo' => 'Apenso',
+			'vinculo' => 'Protocolo Apenso',
 			'vinculado' => 'Apensado',
 			'vin_usuario' => 'Apensador',
 			'vinculadorText' => 'Apensador',

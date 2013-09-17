@@ -36,7 +36,7 @@ class Protocolo extends CActiveRecord
 			array('usuario', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('protocolo, documento, assunto, origem, arquivado', 'safe', 'on'=>'search'),
+			array('protocolo, documento, assunto, origem, estado', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,6 +49,8 @@ class Protocolo extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'us'=>array(self::BELONGS_TO,'User','usuario'),
+			'vinculo'=>array(self::HAS_ONE,'Vinculo','vinculo','condition'=>'vinculo.desvinculado is NULL'),
+			'vinculado'=>array(self::HAS_ONE,'Protocolo',array('protocolo'=>'id'),'through'=>'vinculo'),
 		);
 	}
 
@@ -64,8 +66,9 @@ class Protocolo extends CActiveRecord
 			'datahora' => 'Protocolado',
 			'usuarioText' => 'Protocolista',
 			'observacao' => 'Observação',
-			'arquivado' => 'Arquivado',
-			'arquivadoText' => 'Arquivado',
+			'estado' => 'Situação',
+			'estadoText' => 'Situação',
+			'vinculado.protocolo' => 'Apensado',
 		);
 	}
 
@@ -91,7 +94,7 @@ class Protocolo extends CActiveRecord
 		$criteria->compare('documento',$this->documento,true);
 		$criteria->compare('assunto',$this->assunto,true);
 		$criteria->compare('origem',$this->origem,true);
-		$criteria->compare('arquivado',$this->arquivado,false);
+		$criteria->compare('estado',$this->estado,false);
 		$criteria->order='datahora desc';
 
 		return new CActiveDataProvider($this, array(
@@ -141,17 +144,9 @@ class Protocolo extends CActiveRecord
 		$this->_destino=$destino;
 	}
 	
-	public function getSimNaoOptions()
+	public function getEstadoText()
 	{
-		return array(
-				'0'=>'Não',
-				'1'=>'Sim',
-		);
-	}
-	
-	public function getArquivadoText()
-	{
-		$options=$this->getSimNaoOptions();
-		return $options[$this->arquivado];
+		$options=Estado::model()->estadoOptions;
+		return $options[$this->estado];
 	}
 }

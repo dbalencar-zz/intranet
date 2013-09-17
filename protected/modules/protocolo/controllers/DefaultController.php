@@ -56,7 +56,7 @@ class DefaultController extends RController
 	public function actionArquivar($id)
 	{
 		$model=$this->loadProtocolo($id);
-		$model->arquivado=true;		
+		$model->estado=Estado::ARQUIVADO;		
 		$model->ar_usuario=Yii::app()->getModule('user')->user()->id;
 		$model->ar_datahora=new CDbExpression('NOW()');
 		$model->save();
@@ -185,11 +185,17 @@ class DefaultController extends RController
 		$vinculos->compare('protocolo', $protocolo->id);
 		$vinculos->addCondition('desvinculado is NULL');
 		$vinculosProvider=new CActiveDataProvider('Vinculo', array('criteria'=>$vinculos));
+		
+		$estados=new CDbCriteria();
+		$estados->compare('protocolo_id', $protocolo->id);
+		$estados->order='datahora desc';
+		$estadosProvider=new CActiveDataProvider('Estado', array('criteria'=>$estados));
 	
 		$this->render('protocolo',array(
 				'model'=>$protocolo,
 				'vinculosProvider'=>$vinculosProvider,
 				'tramitacoesProvider'=>$tramitacoesProvider,
+				'estadosProvider'=>$estadosProvider,
 		));
 	}
 	
@@ -232,6 +238,14 @@ class DefaultController extends RController
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
 	}
+	
+	public function loadEstado($id)
+	{
+		$model=Estado::model()->findByPk($id);
+		if($model===null)
+			throw new CHttpException(404,'The requested page does not exist.');
+		return $model;
+	}
 
 	/**
 	 * Performs the AJAX validation.
@@ -263,9 +277,78 @@ class DefaultController extends RController
 		));
 	}
 	
-	public function actionPesquisarPrincipal()
+	public function actionJustificativa($id)
 	{
+		$model=$this->loadEstado($id);
 		
+		$this->render('justificativa',array(
+				'model'=>$model,
+		));
+	}
+	
+	public function actionEstado($protocolo,$estado)
+	{				
+		$model=new Estado();
+		
+		if(isset($_POST['Estado']))
+		{
+			$model->attributes=$_POST['Estado'];
+			$model->usuario=Yii::app()->getModule('user')->user()->id;
+			$model->datahora=new CDbExpression('NOW()');
+			
+			$transaction=Yii::app()->db->beginTransaction();
+			
+			try
+			{
+				if($model->save())
+				{
+					$protocolo=$this->loadProtocolo($model->protocolo_id);
+					$protocolo->estado=$model->estado;
+					
+					if($protocolo->save())
+					{
+						$transaction->commit();
+						$this->redirect(array('protocolo', 'id'=>$protocolo->id));
+					}
+				}
+			}
+			catch (Exception $e)
+			{
+				$transaction->rollBack();
+			}
+		}
+		
+		$model->protocolo_id=$protocolo;
+		$model->estado=$estado;
+		
+		switch ($this->loadProtocolo($model->protocolo_id)->estado)
+		{
+			case Estado::NORMAL:
+				switch ($estado)
+				{
+					case Estado::ARQUIVADO:
+						$estado='Arquivar';
+						break;
+					case Estado::EXTERNO:
+						$estado='Externar';
+						break;
+					case Estado::CANCELADO:
+						$estado='Cancelar';
+						break;
+				}
+				break;
+			case Estado::ARQUIVADO:
+				$estado='Desarquivar';
+				break;
+			case Estado::EXTERNO:
+				$estado='Reinternar';
+				break;
+		}
+		
+		$this->render('estado',array(
+			'model'=>$model,
+			'estado'=>$estado,
+		));
 	}
 	
 	public function actionVincular()
@@ -309,13 +392,26 @@ class DefaultController extends RController
 				$model->vinculado=new CDbExpression('NOW()');
 				$model->vin_usuario=Yii::app()->getModule('user')->user()->id;
 				
-				if ($model->save())
+				$transaction=Yii::app()->db->beginTransaction();
+				try
 				{
-					exit(json_encode(array('status'=>'success')));
+					if ($model->save())
+					{
+						$protocolo->estado=Estado::APENSADO;
+						if ($protocolo->save())
+						{
+							$transaction->commit();
+							exit(json_encode(array('status'=>'success')));
+						}
+					}
+					else
+					{
+						exit(json_encode(array('status'=>'fail','error'=>CHtml::errorSummary($model))));
+					}
 				}
-				else
+				catch (Exception $e)
 				{
-					exit(json_encode(array('status'=>'fail','error'=>CHtml::errorSummary($model))));
+					$transaction->rollBack();
 				}
 			} 
 		}
@@ -338,7 +434,23 @@ class DefaultController extends RController
 			$model=$this->loadVinculo($id);
 			$model->des_usuario=Yii::app()->getModule('user')->user()->id;
 			$model->desvinculado=new CDbExpression('NOW()');
-			$model->save();
+			
+			$transaction=Yii::app()->db->beginTransaction();
+			try
+			{
+				if ($model->save())
+				{
+					$protocolo=$model->vin;
+					$protocolo->estado=Estado::NORMAL;
+					
+					if ($protocolo->save())
+						$transaction->commit();
+				}
+			}
+			catch (Exception $e)
+			{
+				$transaction->rollBack();
+			}
 			
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 			if(!isset($_GET['ajax']))
