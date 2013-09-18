@@ -16,7 +16,7 @@
 				'delete'=>array(
 					'label'=>'Desapensar',
 					'url'=>'Yii::app()->createUrl("/protocolo/default/desvincular", array("id"=>$data->id))',
-					'visible'=>'Yii::app()->user->checkAccess("Desapensador")',
+					'visible'=>'!$data->pro->readOnly && Yii::app()->user->checkAccess("Desapensador")',
 				),
 			),
 		),
