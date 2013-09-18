@@ -153,6 +153,9 @@ class Protocolo extends CActiveRecord
 	
 	public function getReadOnly()
 	{
+		if (Yii::app()->user->isGuest)
+			return true;
+		
 		$unidade=Yii::app()->getModule('user')->user()->profile->unidade_id;
 		
 		$ultimaTramitacao=new CDbCriteria;
