@@ -50,6 +50,7 @@ class Protocolo extends CActiveRecord
 		return array(
 			'us'=>array(self::BELONGS_TO,'User','usuario'),
 			'vinculo'=>array(self::HAS_ONE,'Vinculo','vinculo','condition'=>'vinculo.desvinculado is NULL'),
+			'vinculos'=>array(self::HAS_MANY,'Vinculo','protocolo','condition'=>'vinculos.desvinculado is NULL'),
 			'vinculado'=>array(self::HAS_ONE,'Protocolo',array('protocolo'=>'id'),'through'=>'vinculo'),
 		);
 	}
@@ -148,5 +149,22 @@ class Protocolo extends CActiveRecord
 	{
 		$options=Estado::model()->estadoOptions;
 		return $options[$this->estado];
+	}
+	
+	public function getReadOnly()
+	{
+		$unidade=Yii::app()->getModule('user')->user()->profile->unidade_id;
+		
+		$ultimaTramitacao=new CDbCriteria;
+		$ultimaTramitacao->join='LEFT JOIN tramitacao t2 ON t.id < t2.id and t.protocolo_id = t2.protocolo_id';
+		$ultimaTramitacao->addCondition('t2.id is NULL');
+		$ultimaTramitacao->compare('t.protocolo_id', $this->id, false);
+		
+		$tramitacao=Tramitacao::model()->find($ultimaTramitacao);
+		
+		if (!isset($tramitacao->destino))
+			return $unidade!=$tramitacao->origem;
+		else
+			return $unidade!=$tramitacao->destino;
 	}
 }

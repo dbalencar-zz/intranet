@@ -19,22 +19,23 @@ $this->menu=array(
 	array('label'=>'Pesquisar', 'url'=>array('pesquisar')),
 	array('label'=>'Protocolar', 'url'=>array('protocolar'), 'visible'=>Yii::app()->user->checkAccess('Protocolista')),
 	array('label'=>'Apensar', 'url'=>'#', 'linkOptions'=>array('onclick'=>'js:loadVinculo();'),
-		'visible'=>Yii::app()->user->checkAccess('Apensador') && $model->estado==Estado::NORMAL
+		'visible'=>!$model->readOnly && Yii::app()->user->checkAccess('Apensador') && $model->estado==Estado::NORMAL
 	),
 	array('label'=>'Arquivar', 'url'=>array('estado', 'protocolo'=>$model->id, 'estado'=>Estado::ARQUIVADO),
-		'visible'=>Yii::app()->user->checkAccess("Arquivista") && $model->estado==Estado::NORMAL
+		'visible'=>!$model->readOnly && Yii::app()->user->checkAccess("Arquivista") && $model->estado==Estado::NORMAL
 	),
 	array('label'=>'Desarquivar', 'url'=>array('estado', 'protocolo'=>$model->id, 'estado'=>Estado::NORMAL),
-		'visible'=>Yii::app()->user->checkAccess("Arquivista") && $model->estado==Estado::ARQUIVADO
+		'visible'=>!$model->readOnly && Yii::app()->user->checkAccess("Arquivista") && $model->estado==Estado::ARQUIVADO
 	),
 	array('label'=>'Externar', 'url'=>array('estado', 'protocolo'=>$model->id, 'estado'=>Estado::EXTERNO),
-		'visible'=>Yii::app()->user->checkAccess("Tramitador") && $model->estado==Estado::NORMAL
+		'visible'=>!$model->readOnly && Yii::app()->user->checkAccess("Tramitador") && $model->estado==Estado::NORMAL
 	),
 	array('label'=>'Reinternar', 'url'=>array('estado', 'protocolo'=>$model->id, 'estado'=>Estado::NORMAL),
-		'visible'=>Yii::app()->user->checkAccess("Recebedor") && $model->estado==Estado::EXTERNO
+		'visible'=>!$model->readOnly && Yii::app()->user->checkAccess("Recebedor") && $model->estado==Estado::EXTERNO
 	),		
 	array('label'=>'Cancelar', 'url'=>array('estado', 'protocolo'=>$model->id, 'estado'=>Estado::CANCELADO),
-		'visible'=>Yii::app()->user->checkAccess('Protocolista') && !isset($model->vinculo) && $model->estado==Estado::NORMAL
+		'visible'=>!$model->readOnly && Yii::app()->user->checkAccess('Protocolista') && $model->estado==Estado::NORMAL
+			&& !isset($model->vinculo) && empty($model->vinculos)
 	),
 );
 ?>
