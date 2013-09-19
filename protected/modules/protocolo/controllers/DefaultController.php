@@ -15,7 +15,7 @@ class DefaultController extends RController
 	
 	public function allowedActions()
 	{
-		return 'index, pesquisar, protocolo, tramitacao, suggestedTags';
+		return 'index, pesquisar, protocolo, tramitacao, justificativa, suggestedTags';
 	}
 
 	public function actionIndex()
@@ -50,17 +50,6 @@ class DefaultController extends RController
 		$model->de_datahora=new CDbExpression('NOW()');
 		$model->save();
 		
-		$this->redirect(array('inbox'));
-	}
-	
-	public function actionArquivar($id)
-	{
-		$model=$this->loadProtocolo($id);
-		$model->estado=Estado::ARQUIVADO;		
-		$model->ar_usuario=Yii::app()->getModule('user')->user()->id;
-		$model->ar_datahora=new CDbExpression('NOW()');
-		$model->save();
-	
 		$this->redirect(array('inbox'));
 	}
 	
@@ -299,7 +288,7 @@ class DefaultController extends RController
 			$transaction=Yii::app()->db->beginTransaction();
 			
 			try
-			{
+			{	
 				if($model->save())
 				{
 					$protocolo=$this->loadProtocolo($model->protocolo_id);
