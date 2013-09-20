@@ -83,6 +83,9 @@ return array(
 		'protocolo'=>array(
 			'defaultController' => 'default',
 		),
+		'portaria'=>array(
+			'defaultController' => 'default',
+		)
 	),
 
 	// application components

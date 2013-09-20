@@ -32,6 +32,7 @@
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
 				array('label'=>'Início', 'url'=>array('/site/index')),
+				array('label'=>'Portaria', 'url'=>array('/portaria')),
 				array('label'=>'Protocolo', 'url'=>array('/protocolo')),
 				array('label'=>'Sobre', 'url'=>array('/site/page', 'view'=>'about')),
 				array('label'=>'Contato', 'url'=>array('/site/contact')),
