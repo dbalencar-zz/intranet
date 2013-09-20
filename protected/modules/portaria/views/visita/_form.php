@@ -87,7 +87,7 @@ function addVisitante()
         	'title'=>'Novo Cadastro (Visitante)',
 	        'autoOpen'=>false,
     	    'modal'=>true,
-        	'width'=>500,
+        	'width'=>650,
         	'height'=>260,
     	),
 	));?>
