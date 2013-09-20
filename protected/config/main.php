@@ -63,7 +63,7 @@ return array(
 			'loginUrl' => array('/user/login'),
 			
 			# page after login
-			'returnUrl' => array('/protocolo'),
+			'returnUrl' => array('/site'),
 			
 			# page after logout
 			'returnLogoutUrl' => array('/user/login'),

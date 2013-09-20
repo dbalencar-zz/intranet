@@ -5,15 +5,22 @@ class DefaultController extends RController
 	public function filters()
 	{
 		return array(
-				'rights',
+			'rights',
 		);
+	}
+	
+	public function allowedActions()
+	{
+		return 'index';
 	}
 	
 	public function actionIndex()
 	{
-		if (Yii::app()->user->isGuest)
-			$this->render('index');
-		else 
+		if(Yii::app()->user->checkAccess('Recepcionista'))
+		{
 			$this->redirect(array('visita/create'));
+		}
+		else
+			$this->render('index');
 	}
 }
