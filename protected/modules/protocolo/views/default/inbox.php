@@ -23,9 +23,36 @@ $this->menu=array(
 <h1><?php echo Yii::app()->getModule('user')->user()->profile->unidade->nome; ?></h1>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
+	'id'=>'protocolados-grid',
+	'dataProvider'=>$protocolo->searchPendentes(),
+	'filter'=>$protocolo,
+	'columns'=>array(
+		'protocolo',
+		'documento',
+		'assunto',
+		'datahora',
+		array(
+			'class'=>'CButtonColumn',
+			'template'=>'{tramitar}{view}',
+			'buttons'=>array(
+				'view'=>array(
+					'imageUrl'=>Yii::app()->request->baseUrl.'/images/exibir.png',
+					'url'=>'Yii::app()->createUrl("/protocolo/default/protocolo", array("id"=>$data->id))',
+				),
+				'tramitar'=>array(
+					'label'=>'Tramitar',
+					'imageUrl'=>Yii::app()->request->baseUrl.'/images/tramitar.png',
+					'url'=>'Yii::app()->createUrl("/protocolo/default/tramitar", array("id"=>$data->id))',
+				),
+			),
+		),
+	),
+)); ?>
+
+<?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'pendentes-grid',
-	'dataProvider'=>$model->searchPendentes(),
-	'filter'=>$model,
+	'dataProvider'=>$tramitacao->searchPendentes(),
+	'filter'=>$tramitacao,
 	'columns'=>array(
 		array(
 			'class'=>'DataColumn',

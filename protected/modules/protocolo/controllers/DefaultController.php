@@ -32,14 +32,21 @@ class DefaultController extends RController
 	
 	public function actionInbox()
 	{	
-		$model=new Tramitacao('search');
-		
-		$model->unsetAttributes();
+		$tramitacao=new Tramitacao('search');
+		$tramitacao->unsetAttributes();
+
 		if(isset($_GET['Tramitacao']))
-			$model->attributes=$_GET['Tramitacao'];
+			$tramitacao->attributes=$_GET['Tramitacao'];
+		
+		$protocolo=new Protocolo('search');		
+		$protocolo->unsetAttributes();
+		
+		if(isset($_GET['Protocolo']))
+			$protocolo->attributes=$_GET['Protocolo'];
 		
 		$this->render('inbox', array(
-			'model'=>$model,
+			'tramitacao'=>$tramitacao,
+			'protocolo'=>$protocolo,
 		));
 	}
 	
@@ -85,31 +92,9 @@ class DefaultController extends RController
 		if(isset($_POST['Protocolo']))
 		{
 			$model->attributes=$_POST['Protocolo'];
-			$model->destino=$_POST['Protocolo']['destino'];
 			
-			$transaction=Yii::app()->db->beginTransaction();
-			if($model->save())
-			{
-				$tramitacao=new Tramitacao();
-				$tramitacao->protocolo_id=$model->id;
-				$tramitacao->origem=Yii::app()->getModule('user')->user()->profile->unidade_id;
-				$tramitacao->or_usuario=$model->usuario;
-				$tramitacao->or_datahora=$model->datahora;
-				$tramitacao->destino=$model->destino;
-				
-				if($tramitacao->origem!=23)
-				{
-					$tramitacao->de_usuario=$tramitacao->or_usuario;
-					$tramitacao->de_datahora=$tramitacao->or_datahora;
-				}
-				
-				if($tramitacao->save())
-				{
-					$transaction->commit();				
-					$this->redirect(array('protocolo','id'=>$model->id));
-				}
-			}
-			$transaction->rollBack();
+			if($model->save())				
+				$this->redirect(array('protocolo','id'=>$model->id));
 		}
 
 		$this->render('protocolar',array(

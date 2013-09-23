@@ -11,6 +11,7 @@ $this->widget('zii.widgets.CDetailView', array(
 		'origem',
 		'datahora',
 		'usuarioText',
+		'unidadeText',
 		'observacao',
 		'estadoText',
 		array(
@@ -32,6 +33,7 @@ $this->widget('zii.widgets.CDetailView', array(
 		'origem',
 		'datahora',
 		'usuarioText',
+		'unidadeText',
 		'observacao',
 		'estadoText',
 	),

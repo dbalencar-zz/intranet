@@ -49,6 +49,7 @@ class Protocolo extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'us'=>array(self::BELONGS_TO,'User','usuario'),
+			'un'=>array(self::BELONGS_TO,'Unidade','unidade'),
 			'vinculo'=>array(self::HAS_ONE,'Vinculo','vinculo','condition'=>'vinculo.desvinculado is NULL'),
 			'vinculos'=>array(self::HAS_MANY,'Vinculo','protocolo','condition'=>'vinculos.desvinculado is NULL'),
 			'vinculado'=>array(self::HAS_ONE,'Protocolo',array('protocolo'=>'id'),'through'=>'vinculo'),
@@ -66,6 +67,7 @@ class Protocolo extends CActiveRecord
 			'origem' => 'Interessado',
 			'datahora' => 'Protocolado',
 			'usuarioText' => 'Protocolista',
+			'unidadeText' => 'Unidade',
 			'observacao' => 'Observação',
 			'estado' => 'Situação',
 			'estadoText' => 'Situação',
@@ -102,6 +104,26 @@ class Protocolo extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+	
+	public function searchPendentes()
+	{
+		$criteria=new CDbCriteria;
+		$criteria->join='LEFT JOIN tramitacao t2 ON t.id = t2.protocolo_id';
+		$criteria->addCondition('t2.protocolo_id is null');
+		
+		$criteria->compare('estado','<>1'); //Arquivado
+		$criteria->compare('estado','<>3'); //Apensado
+		$criteria->compare('estado','<>9');
+		$criteria->compare('unidade',Yii::app()->getModule('user')->user()->profile->unidade->id);
+		$criteria->compare('protocolo',$this->protocolo,true);
+		$criteria->compare('documento',$this->documento,true);
+		$criteria->compare('assunto',$this->assunto,true);
+		$criteria->compare('datahora',$this->datahora,true);
+		
+		$criteria->order='protocolo';
+	
+		return new CActiveDataProvider($this, array('criteria'=>$criteria));
+	}
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -121,6 +143,7 @@ class Protocolo extends CActiveRecord
 			$unidade=Unidade::model()->findByPk(Yii::app()->getModule('user')->user()->profile->unidade_id);
 			$this->protocolo=$unidade->novoProtocolo;
 			$this->usuario=Yii::app()->getModule('user')->user()->id;
+			$this->unidade=Yii::app()->getModule('user')->user()->profile->unidade_id;
 			$this->datahora=new CDbExpression('NOW()');
 			$unidade->protocolo+=1;
 			$unidade->save();
@@ -133,6 +156,11 @@ class Protocolo extends CActiveRecord
 	{
 		$profile = $this->us->profile;
 		return $profile->first_name.' '.$profile->last_name.' ('.$profile->unidade->nome.')';
+	}
+	
+	public function getUnidadeText()
+	{
+		return $this->un->id.' - '.$this->un->nome;
 	}
 	
 	public function getDestino()
@@ -165,7 +193,9 @@ class Protocolo extends CActiveRecord
 		
 		$tramitacao=Tramitacao::model()->find($ultimaTramitacao);
 		
-		if (!isset($tramitacao->destino))
+		if(is_null($tramitacao))
+			return $unidade!=$this->un->id;
+		elseif(!isset($tramitacao->destino))
 			return $unidade!=$tramitacao->origem;
 		else
 			return $unidade!=$tramitacao->destino;
