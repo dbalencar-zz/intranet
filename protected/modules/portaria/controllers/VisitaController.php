@@ -163,8 +163,14 @@ class VisitaController extends RController
 		$criteria->order='entrada';
 		$criteria->with='visitante';
 		
+		if(!isset($_POST['inicio']))
+			$_POST['inicio']='';
 		$inicio=$_POST['inicio'];
+			
+		if(!isset($_POST['fim']))
+			$_POST['fim']='';
 		$fim=$_POST['fim'];
+		
 		if($inicio!='')
 			if($fim!='')
 				$criteria->addBetweenCondition(
