@@ -36,6 +36,7 @@
 				array('label'=>'Início', 'url'=>array('/site/index')),
 				array('label'=>'Portaria', 'url'=>array('/portaria'), 'visible'=>Yii::app()->user->checkAccess('Recepcionista')),
 				array('label'=>'Protocolo', 'url'=>array('/protocolo')),
+				array('label'=>'Tecnologia', 'url'=>array('/site/page', 'view'=>'tecnologia')),
 				array('label'=>'Sobre', 'url'=>array('/site/page', 'view'=>'about')),
 				array('label'=>'Contato', 'url'=>array('/site/contact')),
 				array('label'=>'Login', 'url'=>array('/user/login'), 'visible'=>Yii::app()->user->isGuest),
