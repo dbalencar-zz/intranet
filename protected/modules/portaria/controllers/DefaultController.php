@@ -16,11 +16,6 @@ class DefaultController extends RController
 	
 	public function actionIndex()
 	{
-		if(Yii::app()->user->checkAccess('Recepcionista'))
-		{
-			$this->redirect(array('visita/create'));
-		}
-		else
-			$this->render('index');
+		$this->redirect(array('visita/create'));
 	}
 }

@@ -6,6 +6,11 @@ $this->breadcrumbs=array(
 	'Portaria'=>array('visita/create'),
 	'Cadastro',
 );
+
+$this->menu=array(
+	array('label'=>'Relatório de Visitantes', 'url'=>array('visitante/relatorio'), 'linkOptions'=>array('target'=>'_blank')),
+	array('label'=>'Relatório de Visitas', 'url'=>array('visita/relatorio'), 'linkOptions'=>array('target'=>'_blank')),
+);
 ?>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

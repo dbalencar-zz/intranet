@@ -43,6 +43,8 @@ class VisitanteController extends RController
 		if(isset($_POST['Visitante']))
 		{
 			$model->attributes=$_POST['Visitante'];
+			$model->user_id=Yii::app()->getModule('user')->user()->id;
+			$model->datahora=new CDbExpression('NOW()');
 			if($model->save())
 			{
 				if (Yii::app()->request->isAjaxRequest)
@@ -185,5 +187,20 @@ class VisitanteController extends RController
 
 		echo CJSON::encode($res);
 		Yii::app()->end();
+	}
+	
+	public function actionRelatorio()
+	{		
+		$criteria=new CDbCriteria();
+		
+		$criteria->distinct=TRUE;
+		$criteria->order='nome';
+		
+		$models=Visitante::model()->findAll($criteria);
+		
+		$this->layout='//layouts/relatorio';
+		$this->render('rel_visitantes', array(
+			'models'=>$models,
+		));
 	}
 }

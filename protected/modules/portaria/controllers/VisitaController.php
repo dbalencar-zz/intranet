@@ -50,6 +50,7 @@ class VisitaController extends RController
 		{
 			$model->attributes=$_POST['Visita'];
 			$model->entrada=new CDbExpression('NOW()');
+			$model->ent_user_id=Yii::app()->getModule('user')->user()->id;
 			if($model->save())
 				$this->redirect(array('create'));
 		}
@@ -93,6 +94,7 @@ class VisitaController extends RController
 	{
 		$model=$this->loadModel($id);
 		$model->saida=new CDbExpression('NOW()');
+		$model->sai_user_id=Yii::app()->getModule('user')->user()->id;
 		$model->save();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
@@ -152,5 +154,36 @@ class VisitaController extends RController
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+	
+	public function actionRelatorio()
+	{		
+		$criteria=new CDbCriteria();
+		
+		$criteria->order='entrada';
+		$criteria->with='visitante';
+		
+		$inicio=$_POST['inicio'];
+		$fim=$_POST['fim'];
+		if($inicio!='')
+			if($fim!='')
+				$criteria->addBetweenCondition(
+					'entrada',
+					Yii::app()->dateFormatter->format('yyyy-MM-dd', CDateTimeParser::parse($inicio,'dd/MM/yyyy')),
+					Yii::app()->dateFormatter->format('yyyy-MM-dd 23:59:59', CDateTimeParser::parse($fim,'dd/MM/yyyy'))
+				);
+			else
+				$criteria->addCondition('entrada > STR_TO_DATE("'.$inicio.'", "%d/%m/%Y")');
+		elseif($fim!='')
+			$criteria->addCondition('entrada < STR_TO_DATE("'.$fim.'", "%d/%m/%Y")');
+	
+		$models=Visita::model()->findAll($criteria);
+	
+		$this->layout='//layouts/relatorio';
+		$this->render('rel_visitas', array(
+			'inicio'=>$_POST['inicio'],
+			'fim'=>$_POST['fim'],
+			'models'=>$models,
+		));
 	}
 }

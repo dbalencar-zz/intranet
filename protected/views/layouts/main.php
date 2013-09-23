@@ -25,6 +25,8 @@
 <div class="container" id="page">
 
 	<div id="header">
+		<div id="img-logo-pc"><img src="<?php echo Yii::app()->baseUrl; ?>/images/sesp-logo.png"></img></div>
+		<div id="img-logo-am"><img src="<?php echo Yii::app()->baseUrl; ?>/images/estado-logo.png"></img></div>
 		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
 	</div><!-- header -->
 
@@ -32,7 +34,7 @@
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
 				array('label'=>'Início', 'url'=>array('/site/index')),
-				array('label'=>'Portaria', 'url'=>array('/portaria')),
+				array('label'=>'Portaria', 'url'=>array('/portaria'), 'visible'=>Yii::app()->user->checkAccess('Recepcionista')),
 				array('label'=>'Protocolo', 'url'=>array('/protocolo')),
 				array('label'=>'Sobre', 'url'=>array('/site/page', 'view'=>'about')),
 				array('label'=>'Contato', 'url'=>array('/site/contact')),
@@ -56,8 +58,9 @@
 	<div class="clear"></div>
 
 	<div id="footer">
+		<div id="img-logo-gov"><img src="<?php echo Yii::app()->baseUrl; ?>/images/governo-logo.png"></img></div>
 		Copyright &copy; <?php echo date('Y'); ?> by DETEC.<br/>
-		All Rights Reserved.<br/>
+		All Rights Reserved (Douglas Alencar).<br/>
 		<?php echo Yii::powered(); ?>
 	</div><!-- footer -->
 
