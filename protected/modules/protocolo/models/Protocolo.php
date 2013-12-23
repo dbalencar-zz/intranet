@@ -204,7 +204,7 @@ class Protocolo extends CActiveRecord
 		
 		if(is_null($tramitacao))
 			return $unidade!=$this->un->id;
-		elseif(!isset($tramitacao->destino))
+		elseif(!isset($tramitacao->destino) || !isset($tramitacao->de_datahora))
 			return $unidade!=$tramitacao->origem;
 		else
 			return $unidade!=$tramitacao->destino;
