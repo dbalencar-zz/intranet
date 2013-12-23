@@ -53,6 +53,7 @@ class Protocolo extends CActiveRecord
 			'vinculo'=>array(self::HAS_ONE,'Vinculo','vinculo','condition'=>'vinculo.desvinculado is NULL'),
 			'vinculos'=>array(self::HAS_MANY,'Vinculo','protocolo','condition'=>'vinculos.desvinculado is NULL'),
 			'vinculado'=>array(self::HAS_ONE,'Protocolo',array('protocolo'=>'id'),'through'=>'vinculo'),
+			'tramitacao'=>array(self::HAS_ONE,'Tramitacao','protocolo_id','condition'=>'de_datahora is NULL'),
 		);
 	}
 
@@ -120,9 +121,17 @@ class Protocolo extends CActiveRecord
 		$criteria->compare('assunto',$this->assunto,true);
 		$criteria->compare('datahora',$this->datahora,true);
 		
-		$criteria->order='protocolo';
+		$sort = new CSort();
+		$sort->defaultOrder=array('protocolo'=>CSort::SORT_ASC);
+		$sort->attributes = array(
+				'_protocolo'=>array(
+						'asc'=>'p.protocolo',
+						'desc'=>'p.protocolo desc',
+				),
+				'*',
+		);
 	
-		return new CActiveDataProvider($this, array('criteria'=>$criteria));
+		return new CActiveDataProvider($this, array('criteria'=>$criteria,'sort'=>$sort));
 	}
 
 	/**

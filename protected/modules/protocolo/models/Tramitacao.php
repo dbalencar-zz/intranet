@@ -142,8 +142,8 @@ class Tramitacao extends CActiveRecord
 		//$pendentes->order='t.or_datahora desc, t.de_datahora desc';
 	
 		$sort = new CSort();
+		$sort->defaultOrder=array('or_datahora'=>CSort::SORT_DESC);
 		$sort->attributes = array(
-			'defaultOrder'=>'t.or_datahora desc, t.de_datahora desc',
 			'_protocolo'=>array(
 				'asc'=>'p.protocolo',
 				'desc'=>'p.protocolo desc',

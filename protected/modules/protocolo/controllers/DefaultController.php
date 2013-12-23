@@ -33,13 +33,13 @@ class DefaultController extends RController
 	public function actionInbox()
 	{	
 		$tramitacao=new Tramitacao('search');
-		$tramitacao->unsetAttributes();
+		//$tramitacao->unsetAttributes();
 
 		if(isset($_GET['Tramitacao']))
 			$tramitacao->attributes=$_GET['Tramitacao'];
 		
 		$protocolo=new Protocolo('search');		
-		$protocolo->unsetAttributes();
+		//$protocolo->unsetAttributes();
 		
 		if(isset($_GET['Protocolo']))
 			$protocolo->attributes=$_GET['Protocolo'];
@@ -69,8 +69,30 @@ class DefaultController extends RController
 		if(isset($_POST['Tramitacao']))
 		{
 			$model->attributes=$_POST['Tramitacao'];
+			
+			$transaction=Yii::app()->db->beginTransaction();
+			
+			try
+			{
+				foreach($model->pr->vinculos as $n=>$vinculo)
+				{
+					$vin_tram=new Tramitacao();
+					$vin_tram->attributes=$model->attributes;
+					$vin_tram->protocolo_id=$vinculo->vinculo;
+					$vin_tram->save();
+				}
+			}
+			catch (Exception $e)
+			{
+				$transaction->rollBack();
+			}
+			
 			if($model->save())
+			{
+				$transaction->commit();
 				$this->redirect(array('inbox','id'=>$model->protocolo_id));
+			}
+			else $transaction->rollback();
 		}
 	
 		$this->render('tramitar',array(
@@ -125,6 +147,37 @@ class DefaultController extends RController
 		$this->render('destinar',array(
 			'model'=>$model,
 		));
+	}
+	
+	public function actionCancelarDestinar($id)
+	{
+		if(Yii::app()->request->isPostRequest)
+		{
+			$transaction=Yii::app()->db->beginTransaction();
+			
+			try
+			{
+				$protocolo=$this->loadProtocolo($id);
+			
+				foreach ($protocolo->vinculos as $n=>$vinculo)
+				{
+					$vinculo->vin->tramitacao->delete();
+				}
+			
+				if($protocolo->tramitacao->delete())
+				{
+					$transaction->commit();
+					$this->redirect(array('protocolo','id'=>$id));
+				}
+				else $transaction->rollBack();
+			}
+			catch (Exception $e)
+			{
+				$transaction->rollBack();
+			}
+		}
+		else
+			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 
 	/**

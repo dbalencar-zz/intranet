@@ -10,6 +10,11 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 	array('label'=>'Protocolar', 'url'=>array('protocolar')),
+	array('label'=>'Cancelar Tramitação', 'url'=>'#', 'linkOptions'=>array(
+		'submit'=>array('cancelarDestinar', 'id'=>$model->protocolo_id),
+		'confirm'=>'Cancelar Tramitação?',
+		'csrf'=>true,
+	)),
 );
 ?>
 
