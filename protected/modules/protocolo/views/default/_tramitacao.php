@@ -8,11 +8,18 @@
 		'de_datahora',
 		array(
 			'class'=>'CButtonColumn',
-			'template'=>'{view}',
+			'template'=>'{receber}{view}',
 			'buttons'=>array(
 				'view'=>array(
 					'imageUrl'=>Yii::app()->request->baseUrl.'/images/exibir.png',
 					'url'=>'Yii::app()->createUrl("/protocolo/default/tramitacao", array("id"=>$data->id))',
+				),
+				'receber'=>array(
+					'label'=>'Receber',
+					'imageUrl'=>Yii::app()->request->baseUrl.'/images/receber.png',
+					'url'=>'Yii::app()->createUrl("/protocolo/default/receber", array("id"=>$data->id))',
+					'options'=>array('title'=>'Receber','onClick'=>"if(confirm('Confirma o recebimento?'))return true;else return false"),
+					'visible'=>'$data->destino==Yii::app()->getModule("user")->user()->unidade && !isset($data->de_datahora)',
 				),
 			),
 		),

@@ -18,6 +18,9 @@ if (Yii::app()->user->checkAccess('Recebedor'))
 $this->menu=array(
 	array('label'=>'Pesquisar', 'url'=>array('pesquisar')),
 	array('label'=>'Protocolar', 'url'=>array('protocolar'), 'visible'=>Yii::app()->user->checkAccess('Protocolista')),
+	array('label'=>'Tramitar', 'url'=>array('tramitar','id'=>$model->id),
+		'visible'=>!$model->readOnly && Yii::app()->user->checkAccess('Tramitador') && $model->estado==Estado::NORMAL
+	),
 	array('label'=>'Apensar', 'url'=>'#', 'linkOptions'=>array('onclick'=>'js:loadVinculo();'),
 		'visible'=>!$model->readOnly && Yii::app()->user->checkAccess('Apensador') && $model->estado==Estado::NORMAL
 	),
